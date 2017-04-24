@@ -1,0 +1,422 @@
+#row_setting_oa_social_login_create_account  a,
+#row_setting_oa_social_login_create_account  a.button1:hover {
+	color: #BC2A4D;
+	text-decoration: underline;
+}
+
+#row_setting_oa_social_login_create_account  a:hover,
+#row_setting_oa_social_login_create_account  a.button1 {
+	color: #105289;
+	text-decoration: none;
+}
+
+#row_setting_oa_social_login_create_account .section {
+	margin: 5px 0 20px 0;
+}
+
+#row_setting_oa_social_login_create_account .section.welcome {
+	border: 1px solid #ccc;
+	padding: 20px;
+	background-color: #FFFFE0
+}
+
+#row_setting_oa_social_login_create_account .section.get_started {
+	background-color: #DDDDDD;
+	border: 1px dashed #AAAAAA;
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+#row_setting_oa_social_login_create_account .section.get_started h4 {
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+#row_setting_oa_social_login_create_account .section.welcome h3 {
+	margin: 5px 0 10px;
+}
+
+
+#row_setting_oa_social_login_create_account td{
+	padding-bottom: 50px;
+}
+
+
+
+#oa_social_login_test_api_settings{
+	margin-bottom: 50px;
+}
+
+#oa_social_login_api_test_result.error_message {
+	color: red;
+	background: url("../img/status_error.png") no-repeat scroll 0 50% transparent;
+	font-weight: bold;
+	padding-left: 25px;
+	margin-left: 10px;
+}
+
+#oa_social_login_api_test_result.success_message {
+	color: green;
+	background: url("../img/status_ok.png") no-repeat scroll 0 50% transparent;
+	font-weight: bold;
+	padding-left: 25px;
+	margin-left: 10px;
+}
+
+#oa_social_login_api_test_result.working_message {
+	background: url("../img/status_loading.gif") no-repeat scroll 0 50% #ddd;
+	padding-left: 16px;
+    font-weight: bold;
+    margin-left: 50px;
+}
+
+#row_setting_oa_social_login_api_connection_handler ul{
+	margin-top: 5px;
+    padding-left: 17px;
+}
+
+#row_setting_oa_social_login_private_key td{
+	border-bottom: 0px !important;
+}
+#row_setting_oa_social_login_api_verify_button td{
+	border-top: 0px !important;
+    padding-top: 0;
+}
+
+
+
+#oa_social_login_autodetect_api_connection_handler{
+	margin-bottom: 50px;
+}
+#oa_social_login_api_connection_handler_result.error_message {
+	color: red;
+	background: url("../img/status_error.png") no-repeat scroll 0 50% transparent;
+	font-weight: bold;
+	padding-left: 25px;
+	margin-left: 10px;
+}
+
+#oa_social_login_api_connection_handler_result.success_message {
+	color: green;
+	background: url("../img/status_ok.png") no-repeat scroll 0 50% transparent;
+	font-weight: bold;
+	padding-left: 25px;
+	margin-left: 10px;
+}
+
+#oa_social_login_api_connection_handler_result.working_message {
+	background: url("../img/status_loading.gif") no-repeat scroll 0 50% #ddd;
+	padding-left: 16px;
+    font-weight: bold;
+    margin-left: 50px;
+}
+
+#row_setting_oa_social_login_connection_port td{
+	border-bottom: 0px !important;
+}
+#row_setting_oa_social_login_autodetect_button td{
+	border-top: 0px !important;
+    padding-top: 0;
+}
+
+
+
+#oa_social_login_test_api_settings,
+#oa_social_login_autodetect_api_connection_handler {
+    border: 1px solid #565656;
+    padding: 4px 7px;
+    background: #0f6dc3;
+    color: #fff;
+    font-weight: bold;
+    font-family: 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif;
+    margin-right: 3px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    outline: 0;
+    cursor:pointer;
+}
+#oa_social_login_test_api_settings:hover,
+#oa_social_login_autodetect_api_connection_handler:hover {
+    background: #0b5394;
+}
+
+
+tr#row_setting_oa_social_login_enable_display td.first,
+tr#row_setting_oa_social_login_api_connection_display td.first,
+tr#row_setting_oa_social_login_api_credential_display td.first,
+tr#row_setting_oa_social_login_where_display td.first,
+tr#row_setting_oa_social_login_link_display td.first,
+tr#row_setting_oa_social_login_avatars_display td.first,
+tr#row_setting_oa_social_login_redirection_display td.first,
+tr#row_setting_oa_social_login_social_network_display td.first{
+	background-color: #0f6dc3;
+    color: white;
+}
+
+tr#row_setting_oa_social_login_enable_display td.first legend,
+tr#row_setting_oa_social_login_api_connection_display td.first legend,
+tr#row_setting_oa_social_login_api_credential_display td.first legend,
+tr#row_setting_oa_social_login_where_display td.first legend,
+tr#row_setting_oa_social_login_link_display td.first legend,
+tr#row_setting_oa_social_login_avatars_display td.first legend,
+tr#row_setting_oa_social_login_redirection_display td.first legend,
+tr#row_setting_oa_social_login_social_network_display td.first legend{
+	font-size: 15px;
+}
+
+tr#row_setting_oa_social_login_api_credential_display td.first a{
+	color: #ffd60e;
+}
+
+#row_setting_oa_social_login_provider_vimeo label:not(.setting_oa_social_login_provider_vimeo),
+#row_setting_oa_social_login_provider_blogger label:not(.setting_oa_social_login_provider_blogger),
+#row_setting_oa_social_login_provider_foursquare label:not(.setting_oa_social_login_provider_foursquare),
+#row_setting_oa_social_login_provider_google label:not(.setting_oa_social_login_provider_google),
+#row_setting_oa_social_login_provider_reddit label:not(.setting_oa_social_login_provider_reddit),
+#row_setting_oa_social_login_provider_linkedin label:not(.setting_oa_social_login_provider_linkedin),
+#row_setting_oa_social_login_provider_windowslive label:not(.setting_oa_social_login_provider_windowslive),
+#row_setting_oa_social_login_provider_livejournal label:not(.setting_oa_social_login_provider_livejournal),
+#row_setting_oa_social_login_provider_myspace label:not(.setting_oa_social_login_provider_myspace),
+#row_setting_oa_social_login_provider_openid label:not(.setting_oa_social_login_provider_openid),
+#row_setting_oa_social_login_provider_draugiem label:not(.setting_oa_social_login_provider_draugiem),
+#row_setting_oa_social_login_provider_twitter label:not(.setting_oa_social_login_provider_twitter),
+#row_setting_oa_social_login_provider_vkontakte label:not(.setting_oa_social_login_provider_vkontakte),
+#row_setting_oa_social_login_provider_wordpress label:not(.setting_oa_social_login_provider_wordpress),
+#row_setting_oa_social_login_provider_yahoo label:not(.setting_oa_social_login_provider_yahoo),
+#row_setting_oa_social_login_provider_paypal label:not(.setting_oa_social_login_provider_paypal),
+#row_setting_oa_social_login_provider_stackexchange label:not(.setting_oa_social_login_provider_stackexchange),
+#row_setting_oa_social_login_provider_steam label:not(.setting_oa_social_login_provider_steam),
+#row_setting_oa_social_login_provider_mailru label:not(.setting_oa_social_login_provider_mailru),
+#row_setting_oa_social_login_provider_skyrock label:not(.setting_oa_social_login_provider_skyrock),
+#row_setting_oa_social_login_provider_github label:not(.setting_oa_social_login_provider_github),
+#row_setting_oa_social_login_provider_disqus label:not(.setting_oa_social_login_provider_disqus),
+#row_setting_oa_social_login_provider_youtube label:not(.setting_oa_social_login_provider_youtube),
+#row_setting_oa_social_login_provider_odnoklassniki label:not(.setting_oa_social_login_provider_odnoklassniki),
+#row_setting_oa_social_login_provider_deviantart label:not(.setting_oa_social_login_provider_deviantart),
+#row_setting_oa_social_login_provider_twitch label:not(.setting_oa_social_login_provider_twitch),
+#row_setting_oa_social_login_provider_instagram label:not(.setting_oa_social_login_provider_instagram),
+#row_setting_oa_social_login_provider_battlenet label:not(.setting_oa_social_login_provider_battlenet),
+#row_setting_oa_social_login_provider_dribbble label:not(.setting_oa_social_login_provider_dribbble),
+#row_setting_oa_social_login_provider_facebook label:not(.setting_oa_social_login_provider_facebook),
+#row_setting_oa_social_login_provider_amazon label:not(.setting_oa_social_login_provider_amazon)
+{
+    vertical-align: 13px;
+    margin: 0 15px 0 5px;
+    width: 100px;
+    display: inline-block;
+}
+
+#row_setting_oa_social_login_provider_vimeo .description,
+#row_setting_oa_social_login_provider_blogger .description,
+#row_setting_oa_social_login_provider_foursquare .description,
+#row_setting_oa_social_login_provider_google .description,
+#row_setting_oa_social_login_provider_reddit .description,
+#row_setting_oa_social_login_provider_linkedin .description,
+#row_setting_oa_social_login_provider_windowslive .description,
+#row_setting_oa_social_login_provider_livejournal .description,
+#row_setting_oa_social_login_provider_myspace .description,
+#row_setting_oa_social_login_provider_openid .description,
+#row_setting_oa_social_login_provider_draugiem .description,
+#row_setting_oa_social_login_provider_twitter .description,
+#row_setting_oa_social_login_provider_vkontakte .description,
+#row_setting_oa_social_login_provider_wordpress .description,
+#row_setting_oa_social_login_provider_yahoo .description,
+#row_setting_oa_social_login_provider_paypal .description,
+#row_setting_oa_social_login_provider_stackexchange .description,
+#row_setting_oa_social_login_provider_steam .description,
+#row_setting_oa_social_login_provider_mailru .description,
+#row_setting_oa_social_login_provider_skyrock .description,
+#row_setting_oa_social_login_provider_github .description,
+#row_setting_oa_social_login_provider_disqus .description,
+#row_setting_oa_social_login_provider_youtube .description,
+#row_setting_oa_social_login_provider_odnoklassniki .description,
+#row_setting_oa_social_login_provider_deviantart .description,
+#row_setting_oa_social_login_provider_twitch .description,
+#row_setting_oa_social_login_provider_instagram .description,
+#row_setting_oa_social_login_provider_battlenet .description,
+#row_setting_oa_social_login_provider_dribbble .description,
+#row_setting_oa_social_login_provider_facebook .description,
+#row_setting_oa_social_login_provider_amazon .description
+{
+	float: left;
+	margin-top: 5px;
+}
+
+#row_setting_oa_social_login_provider_vimeo .form_row,
+#row_setting_oa_social_login_provider_blogger .form_row,
+#row_setting_oa_social_login_provider_foursquare .form_row,
+#row_setting_oa_social_login_provider_google .form_row,
+#row_setting_oa_social_login_provider_reddit .form_row,
+#row_setting_oa_social_login_provider_linkedin .form_row,
+#row_setting_oa_social_login_provider_windowslive .form_row,
+#row_setting_oa_social_login_provider_livejournal .form_row,
+#row_setting_oa_social_login_provider_myspace .form_row,
+#row_setting_oa_social_login_provider_openid .form_row,
+#row_setting_oa_social_login_provider_draugiem .form_row,
+#row_setting_oa_social_login_provider_twitter .form_row,
+#row_setting_oa_social_login_provider_vkontakte .form_row,
+#row_setting_oa_social_login_provider_wordpress .form_row,
+#row_setting_oa_social_login_provider_yahoo .form_row,
+#row_setting_oa_social_login_provider_paypal .form_row,
+#row_setting_oa_social_login_provider_stackexchange .form_row,
+#row_setting_oa_social_login_provider_steam .form_row,
+#row_setting_oa_social_login_provider_mailru .form_row,
+#row_setting_oa_social_login_provider_skyrock .form_row,
+#row_setting_oa_social_login_provider_github .form_row,
+#row_setting_oa_social_login_provider_disqus .form_row,
+#row_setting_oa_social_login_provider_youtube .form_row,
+#row_setting_oa_social_login_provider_odnoklassniki .form_row,
+#row_setting_oa_social_login_provider_deviantart .form_row,
+#row_setting_oa_social_login_provider_twitch .form_row,
+#row_setting_oa_social_login_provider_instagram .form_row,
+#row_setting_oa_social_login_provider_battlenet .form_row,
+#row_setting_oa_social_login_provider_dribbble .form_row,
+#row_setting_oa_social_login_provider_facebook .form_row,
+#row_setting_oa_social_login_provider_amazon .form_row
+{
+	display: inline-block;
+}
+
+
+
+
+
+
+.oa_social_login_provider {
+	background-image: url("../img/sprite_35_35.png");
+	text-indent: -9999px;
+	height: 35px;
+	width: 35px;
+	display: inline-block;
+	float: left;
+	margin: 0 5px;
+	cursor: pointer;
+	padding: 0;
+}
+
+.oa_social_login_provider_vimeo {
+	background-position: -2px -1px;
+}
+
+.oa_social_login_provider_blogger {
+	background-position: -39px -1px;
+}
+
+.oa_social_login_provider_facebook {
+	background-position: -76px -1px;
+}
+
+.oa_social_login_provider_foursquare {
+	background-position: -113px -1px;
+}
+
+.oa_social_login_provider_google {
+	background-position: -150px -1px;
+}
+
+.oa_social_login_provider_reddit {
+	background-position: -187px -1px;
+}
+
+.oa_social_login_provider_linkedin {
+	background-position: -224px -1px;
+}
+
+.oa_social_login_provider_windowslive {
+	background-position: -261px -1px;
+}
+
+.oa_social_login_provider_livejournal {
+	background-position: -298px -1px;
+}
+
+.oa_social_login_provider_myspace {
+	background-position: -372px -1px;
+}
+
+.oa_social_login_provider_openid {
+	background-position: -409px -1px;
+}
+
+.oa_social_login_provider_draugiem {
+	background-position: -446px -1px;
+}
+
+.oa_social_login_provider_twitter {
+	background-position: -520px -1px;
+}
+
+.oa_social_login_provider_vkontakte {
+	background-position: -631px -1px;
+}
+
+.oa_social_login_provider_wordpress {
+	background-position: -668px -1px;
+}
+
+.oa_social_login_provider_yahoo {
+	background-position: -705px -1px;
+}
+
+.oa_social_login_provider_paypal {
+	background-position: -742px -1px;
+}
+
+.oa_social_login_provider_stackexchange {
+	background-position: -779px -1px;
+}
+
+.oa_social_login_provider_steam {
+	background-position: -816px -1px;
+}
+
+.oa_social_login_provider_mailru {
+	background-position: -853px -1px;
+}
+
+.oa_social_login_provider_skyrock {
+	background-position: -890px -1px;
+}
+
+.oa_social_login_provider_github {
+	background-position: -927px -1px;
+}
+
+.oa_social_login_provider_disqus {
+	background-position: -964px -1px;
+}
+
+.oa_social_login_provider_youtube {
+	background-position: -1001px -1px;
+}
+
+.oa_social_login_provider_odnoklassniki {
+	background-position: -1038px -1px;
+}
+
+.oa_social_login_provider_deviantart {
+	background-position: -1075px -1px;
+}
+
+.oa_social_login_provider_twitch {
+	background-position: -1112px -1px;
+}
+
+.oa_social_login_provider_amazon {
+	background-position: -1149px -1px;
+}
+
+.oa_social_login_provider_instagram {
+	background-position: -1186px -1px;
+}
+
+.oa_social_login_provider_battlenet {
+	background-position: -1223px -1px;
+}
+
+.oa_social_login_provider_dribbble {
+	background-position: -1260px -1px;
+}
