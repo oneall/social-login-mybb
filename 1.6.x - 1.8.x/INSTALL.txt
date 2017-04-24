@@ -1,0 +1,22 @@
+Installation and Configuration
+
+Please follow these steps to install OneAll Social Login for myBB:
+
+1. Download the module archive,
+2. Extract the files of the downloaded archive. Copy the content oa-social-login folder included in the downloaded .ZIP file to the root folder of your MyBB installation. After having copied the folder you must have a inc/plugins/oa_social_login folder in your MyBB directory.
+4. Login to your myBB administration area,
+5. Open the "Configuration" panel and click on "Plugins". Then search for OneAll Social Login and click on "Install & Activate".
+6. Open the "Configuration" page, click on "Settings" and then click on "OneAll Social Login",
+7. Enter your "API Settings", choose the Social Networks and save your settings.
+
+NOTE: 
+If you do not have your "API Settings" yet, please signup for a new account 
+here: https://app.oneall.com/signup/.
+
+You will obtain the "API Settings" after having created a new Site.
+
+More information is available here:
+http://docs.oneall.com/plugins/guide/social-login-mybb/
+
+Feel free to contact us if you have any questions. 
+http://www.oneall.com/company/contact-us/
