@@ -1,24 +1,60 @@
 <?php
-
-// **************************************************
-// Plugin Setup / Uninstall / Update
-// **************************************************
+/**
+ * @package   	OneAll Social Login
+ * @copyright 	Copyright 2011-2017 http://www.oneall.com
+ * @license   	GNU/GPL 2 or later
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,USA.
+ *
+ * The "GNU General Public License" (GPL) is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ */
 
 /**
- * Plugin description
+ * Return plugin description
  * @return array plugin description
  */
 function oa_social_login_info()
 {
     return [
         'name' => 'OneAll Social Login',
-        'description' => 'Allow your visitors to comment, login and register with 25+ social networks like Twitter, Facebook, LinkedIn, Instagram, Вконтакте, Google or Yahoo.',
+        'description' => 'Allow your visitors to comment, login and register with 30+ Social Networks like Twitter, Facebook, LinkedIn, Instagram, Вконтакте, Google or Yahoo.',
         'website' => 'http://www.oneall.com',
         'author' => 'Damien ZARA',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '1.0',
+        'version' => '2.0',
         'compatibility' => '16*,18*'
     ];
+}
+
+/**
+ * Return plugin info
+ * @param string info to get
+ * @return string plugin info
+ */
+function oa_social_login_get_info ($what)
+{
+    $oa_social_login_info = oa_social_login_info ();
+
+    if (isset ($oa_social_login_info[$what]))
+    {
+        return $oa_social_login_info[$what];
+    }
+
+    return null;
 }
 
 /**
@@ -50,36 +86,37 @@ function oa_social_login_activate()
         $lang->load('oa_social_login');
     }
 
-    // is desactivated ?
+    // Is desactivated ?
     $query = $db->simple_select("settinggroups", "gid", "name = 'oa_social_login'", array("limit" => 1));
     $is_existing_group = $db->fetch_field($query, "gid");
 
-    // case : deactivated -> activated
+    // Case : deactivated -> activated
     if (empty($is_existing_group))
     {
-        // get group id of existing settings (only group is deleted in deactivation)
-        $query = $db->simple_select("settings", "gid", "name = 'oa_social_login_enabled'", array("limit" => 1));
+        // Get group id of existing settings (only group is deleted in deactivation)
+        $query = $db->simple_select("settings", "gid", "name = 'oa_social_login_subdomain'", array("limit" => 1));
         $current_gid = $db->fetch_field($query, "gid");
 
-        // get max position
+        // Get max position
         $query = $db->simple_select("settinggroups", "disporder", "", array("limit" => 1, "order_by" => 'disporder', "order_dir" => 'DESC'));
         $max_disporder = (int) $db->fetch_field($query, "disporder");
 
-        //reinsert plugin settings
+        // Reinsert plugin settings
         $save_settinggroups = array();
 
-        // is the current gid used (if user modify manually gids)
+        // Is the current gid used (if user modify manually gids)
         $query = $db->simple_select("settinggroups", "gid", "gid = '" . $current_gid . "'", array("limit" => 1));
         $is_existing_gid = $db->fetch_field($query, "gid");
 
-        // unused
+        // Unused
         if (empty($is_existing_gid))
         {
             $save_settinggroups['gid'] = $current_gid;
         }
-        else //already existing gid
+        // Already existing gid
+        else
         {
-            //get max gid
+            // Get max gid
             $query = $db->simple_select("settinggroups", "gid", "", array("limit" => 1, "order_by" => 'gid', "order_dir" => 'DESC'));
             $max_gid = (int) $db->fetch_field($query, "gid");
             $max_gid = $max_gid + 1;
@@ -87,6 +124,7 @@ function oa_social_login_activate()
             // Update all settings
             $db->update_query("settings", array("gid" => $max_gid), "gid='" . $is_existing_gid . "'");
 
+            // Use new gid
             $save_settinggroups['gid'] = $max_gid;
         }
 
@@ -99,12 +137,6 @@ function oa_social_login_activate()
 
         // Rebuild the settings file.
         rebuild_settings();
-
-        // case : install & activation
-    }
-    else
-    {
-        // nothing to do
     }
 }
 
@@ -116,69 +148,57 @@ function oa_social_login_is_installed()
 {
     global $cache;
 
-    $oa_plugin_info = oa_social_login_info();
-    $installed_plugins = $cache->read("cached_plugins");
-    if ($installed_plugins[$oa_plugin_info['name']])
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    // Read cache
+    $installed_plugins = $cache->read('cached_plugins');
+
+    // Check if installed
+    return (( ! empty ($installed_plugins[oa_social_login_get_info('name')])) ? true : false);
 }
 
 /**
- * Add Social Login Plugin tags in templates
+ * Adds the Social Login Plugin tags to the templates
  * @return void
  */
-function oa_social_login_set_plugin()
+function oa_social_login_add_to_templates()
 {
-    global $mybb;
-
     require_once MYBB_ROOT . 'inc/adminfunctions_templates.php';
 
-    // 1.8 has jQuery, not Prototype
-    if ($mybb->version_code >= 1700)
-    {
-        //plugin
-        find_replace_templatesets('header_welcomeblock_guest', '#' . preg_quote('{$lang->remember_me}</label>') . '#i', '{$lang->remember_me}</label>{$oa_login_login_page}');
-        find_replace_templatesets('header', '#' . preg_quote('{$pm_notice}') . '#i', '{$oa_login_other_page}{$pm_notice}');
-        find_replace_templatesets('member_register', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_registration_page}');
-        find_replace_templatesets('index', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_main_page}');
-        find_replace_templatesets('error_nopermission', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
-        find_replace_templatesets('member_login', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
-    }
-    else
-    {
-        //plugin
-        find_replace_templatesets('header_welcomeblock_guest', '#' . preg_quote('{$lang->welcome_register}</a>)</span>') . '#i', '{$lang->welcome_register}</a>)</span>{$oa_login_login_page}');
-        find_replace_templatesets('header', '#' . preg_quote('{$pm_notice}') . '#i', '{$oa_login_other_page}{$pm_notice}');
-        find_replace_templatesets('member_register', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_registration_page}');
-        find_replace_templatesets('index', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_main_page}');
-        find_replace_templatesets('error_nopermission', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
-        find_replace_templatesets('member_login', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
-    }
+    // Library
+    find_replace_templatesets('headerinclude', '#' . preg_quote('{$stylesheets}') . '#i', '{$stylesheets}{$oneall_social_login_library}');
+
+    // Social Login
+    find_replace_templatesets('header_welcomeblock_guest', '#' . preg_quote('</table>') . '#i', '{$oa_login_login_page}</table>');
+    find_replace_templatesets('header', '#' . preg_quote('{$pm_notice}') . '#i', '{$oa_login_other_page}{$pm_notice}');
+    find_replace_templatesets('member_register', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_registration_page}');
+    find_replace_templatesets('index', '#' . preg_quote('{$header}') . '#i', '{$header}{$oa_login_main_page}');
+    find_replace_templatesets('error_nopermission', '#' . preg_quote('</table>') . '#i', '<!-- oa_login_member_page --></table>');
+    find_replace_templatesets('member_login', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
+
+    // Social Link
+    find_replace_templatesets('usercp_profile', '#' . preg_quote ('{$customtitle}') .'#i', '{$oa_social_link}{$customtitle}');
 }
 
 /**
- * Remove Social Login Plugin tags of templates
+ * Remove the Social Login Plugin tags from the templates
  * @return void
  */
-function oa_social_login_remove_plugin()
+function oa_social_login_cleanup_templates()
 {
     require_once MYBB_ROOT . 'inc/adminfunctions_templates.php';
 
-    // library
-    find_replace_templatesets('headerinclude', '#' . preg_quote('{$oa_library}') . '#i', '');
+    // Library
+    find_replace_templatesets('headerinclude', '#' . preg_quote('{$oneall_social_login_library}') . '#i', '');
 
-    // plugin
+    // Social Login
     find_replace_templatesets('header_welcomeblock_guest', '#' . preg_quote('{$oa_login_login_page}') . '#i', '');
     find_replace_templatesets('header', '#' . preg_quote('{$oa_login_other_page}') . '#i', '');
     find_replace_templatesets('member_register', '#' . preg_quote('{$oa_login_registration_page}') . '#i', '');
     find_replace_templatesets('index', '#' . preg_quote('{$oa_login_main_page}') . '#i', '');
-    find_replace_templatesets('error_nopermission', '#' . preg_quote('{$oa_login_member_page}') . '#i', '');
+    find_replace_templatesets('error_nopermission', '#' . preg_quote('<!-- oa_login_member_page -->') . '#i', '');
     find_replace_templatesets('member_login', '#' . preg_quote('{$oa_login_member_page}') . '#i', '');
+
+    // Social Link
+    find_replace_templatesets('usercp_profile', '#' . preg_quote ('{$oa_social_link}') .'#i', '');
 }
 
 /**
@@ -187,7 +207,7 @@ function oa_social_login_remove_plugin()
  */
 function oa_social_login_install()
 {
-    global $db, $lang, $mybb, $cache, $oa_settings;
+    global $db, $lang, $mybb, $cache;
 
     // Load language
     if (!$lang->oa_social_login)
@@ -196,7 +216,7 @@ function oa_social_login_install()
     }
 
     // Add plugin settings
-    add_settings($oa_settings);
+    oa_social_login_add_settings();
 
     // Add User Token table
     if (!$db->table_exists('oa_social_login_user_token'))
@@ -216,18 +236,18 @@ function oa_social_login_install()
         $collation = $db->build_create_table_collation();
         $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_identity_token(
             id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            mybb_oa_social_login_user_tokenid INT(10) NOT NULL,
+            utid INT(10) NOT NULL,
             identity_token CHAR(36) NOT NULL,
-            identity_provider CHAR(36) NOT NULL,
+            provider CHAR(36) NOT NULL,
             date_creation INT(10)
             ) ENGINE=MyISAM{$collation};");
     }
 
-    // Insert our templates
-    add_templates();
+    // Add our templates
+    oa_social_login_add_templates();
 
-    // Insert our css
-    add_stylesheet();
+    // Add our CSS
+    oa_social_login_add_stylesheet();
 
     // Create cache
     $info = oa_social_login_info();
@@ -239,10 +259,7 @@ function oa_social_login_install()
     $cache->update('cached_plugins', $shadePlugins);
 
     // Place tags in templates
-    oa_social_login_set_plugin();
-
-    // Add Social Login Library
-    find_replace_templatesets('headerinclude', '#' . preg_quote('{$stylesheets}') . '#i', '{$stylesheets}{$oa_library}');
+    oa_social_login_add_to_templates();
 
     // Rebuild the settings file.
     rebuild_settings();
@@ -254,70 +271,64 @@ function oa_social_login_install()
  */
 function oa_social_login_uninstall()
 {
-    global $db, $cache, $lang;
+    global $db, $cache;
 
-    if (!$lang->oa_social_login)
-    {
-        $lang->load('oa_social_login');
-    }
-
-    // Delete Group settings
-    $db->delete_query('settinggroups', "name='oa_social_login'");
-
-    // Safety delete (if plugin was desactivated before)
-    $name = $db->escape_string('oa_social_login');
-    $where = "name LIKE '{$name}_%'";
-
-    // Delete all settings.
-    $query = $db->simple_select('settings', 'sid', $where);
+    // Delete settings.
+    $query = $db->simple_select('settings', 'sid', "name LIKE 'oa_social_login_%'");
     while ($sid = $db->fetch_field($query, 'sid'))
     {
-        $db->delete_query('settings', "sid='{$sid}'");
+        $db->delete_query('settings', "sid='".intval ($sid) ."'");
     }
 
-    // Remove User Token table
+    // Delete settings group.
+    $db->delete_query('settinggroups', "name='oa_social_login'");
+
+    // Remove User Token table.
     if ($db->table_exists('oa_social_login_user_token'))
     {
-        $collation = $db->drop_table('oa_social_login_user_token');
+        // Keep this table, so that relationshops are not lost when re-installing
+        // $collation = $db->drop_table('oa_social_login_user_token');
     }
 
-    // Remove identity Token table
+    // Remove Identity Token table.
     if ($db->table_exists('oa_social_login_identity_token'))
     {
-        $collation = $db->drop_table('oa_social_login_identity_token');
+        // Keep this table, so that relationshops are not lost when re-installing
+        // $collation = $db->drop_table('oa_social_login_identity_token');
     }
 
-    // Delete templates
-    delete_templates();
+    // Delete templates.
+    oa_social_login_delete_templates();
 
-    // Delete stylesheet
-    delete_stylesheet();
+    // Delete stylesheet.
+    oa_social_login_delete_stylesheet();
 
-    // Remove plugin of templates
-    oa_social_login_remove_plugin();
+    // Remove plugin from templates.
+    oa_social_login_cleanup_templates();
 
     // Delete plugin from cache
-    $info = oa_social_login_info();
-    $shadePlugins = $cache->read('cached_plugins');
-    unset($shadePlugins[$info['name']]);
-    $cache->update('cached_plugins', $shadePlugins);
+    $cached_plugins = $cache->read('cached_plugins');
+    unset($cached_plugins[oa_social_login_get_info('name')]);
+
+    // Update cache.
+    $cache->update('cached_plugins', $cached_plugins);
 
     // Rebuild the settings file.
     rebuild_settings();
 }
 
 /**
- * Add stylesheets to plugin. All steelsheet of directory css will be merged
+ * Add stylesheets to plugin. All stylsheets will be merged
  * @return void
  */
-function add_stylesheet()
+function oa_social_login_add_stylesheet()
 {
     global $db;
     require_once MYBB_ROOT . "admin/inc/functions_themes.php";
 
     $name = 'oa_social_login.css';
 
-    // Insert our css
+    // Insert our CSS
     $css_directory = new DirectoryIterator(dirname(__FILE__) . '/css');
     $stylesheet_content = "";
     foreach ($css_directory as $file)
@@ -338,7 +349,7 @@ function add_stylesheet()
         'sid' => null,
         'name' => $name,
         'tid' => $tid,
-        'stylesheet' => $db->escape_string($stylesheet_content),
+        'stylesheet' => $stylesheet_content,
         'cachefile' => $name,
         'lastmodified' => TIME_NOW
     );
@@ -354,7 +365,7 @@ function add_stylesheet()
  * @param string name
  * @return void
  */
-function delete_stylesheet($name = 'oa_social_login.css')
+function oa_social_login_delete_stylesheet($name = 'oa_social_login.css')
 {
     global $db;
     require_once MYBB_ROOT . "admin/inc/functions_themes.php";
@@ -381,7 +392,7 @@ function delete_stylesheet($name = 'oa_social_login.css')
  * @param string Title for the template group
  * @param array List of templates to be added to this group.
  */
-function add_templates($prefix = 'oasociallogin')
+function oa_social_login_add_templates($prefix = 'oasociallogin')
 {
     global $db;
 
@@ -424,7 +435,7 @@ function add_templates($prefix = 'oasociallogin')
  *
  * @return void
  */
-function delete_templates($prefix = 'oasociallogin')
+function oa_social_login_delete_templates($prefix = 'oasociallogin')
 {
     global $db;
 
@@ -440,35 +451,11 @@ function delete_templates($prefix = 'oasociallogin')
 }
 
 /**
- * Delete Settings
- *
- * @return void
- */
-function delete_settings()
-{
-    global $db;
-
-    // Delete Group settings
-    $db->delete_query('settinggroups', "name='oa_social_login'");
-
-    // Safety delete (if plugin was desactivated before)
-    $name = $db->escape_string('oa_social_login');
-    $where = "name LIKE '{$name}_%'";
-
-    // Delete all settings.
-    $query = $db->simple_select('settings', 'sid', $where);
-    while ($sid = $db->fetch_field($query, 'sid'))
-    {
-        $db->delete_query('settings', "sid='{$sid}'");
-    }
-}
-
-/**
  * Add OneAll Social Login Settings
  * @param array $setting_list array of all settings
  * @return void
  */
-function add_settings($setting_list)
+function oa_social_login_add_settings()
 {
     global $db, $lang;
 
@@ -489,6 +476,8 @@ function add_settings($setting_list)
 
     // Create Group
     $gid = $db->insert_query("settinggroups", $group);
+
+    $setting_list = oa_social_login_get_settings();
 
     // Create settings.
     foreach ($setting_list as $key => $setting)

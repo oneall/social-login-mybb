@@ -1,6 +1,28 @@
 <?php
-
-define('USER_AGENT', 'SocialLogin/2.7 myBB/1.8.x (+http://www.oneall.com/)');
+/**
+ * @package   	OneAll Social Login
+ * @copyright 	Copyright 2011-2017 http://www.oneall.com
+ * @license   	GNU/GPL 2 or later
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,USA.
+ *
+ * The "GNU General Public License" (GPL) is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ */
+define('OA_SOCIAL_LOGIN_USER_AGENT', 'SocialLogin/2.7 myBB/1.8.x (+http://www.oneall.com/)');
 
 /**
  * Sends an API request by using the given handler.
@@ -11,24 +33,22 @@ define('USER_AGENT', 'SocialLogin/2.7 myBB/1.8.x (+http://www.oneall.com/)');
  * @param  integer $timeout timeout duration
  * @return void
  */
-function do_api_request($handler, $url, $options = array(), $data = array(), $timeout = 30)
+function oa_social_login_do_api_request($handler, $url, $options = array(), $data = array(), $timeout = 15)
 {
     // FSOCKOPEN
     if ($handler == 'fsockopen')
     {
-        return fsockopen_request($url, $options, $data, $timeout);
+        return oa_social_login_fsockopen_request($url, $options, $data, $timeout);
     }
     // CURL
     else
     {
-        return curl_request($url, $options, $data, $timeout);
+        return oa_social_login_curl_request($url, $options, $data, $timeout);
     }
 }
 
 // ********************************************************
-// ********************************************************
 // CURL
-// ********************************************************
 // ********************************************************
 
 /**
@@ -37,12 +57,12 @@ function do_api_request($handler, $url, $options = array(), $data = array(), $ti
  * @param  boolean $secure use https or http
  * @return boolean         curl is setup
  */
-function check_curl_available()
+function oa_social_login_check_curl_available()
 {
     //Make sure cURL has been loaded
-    if (in_array('curl', get_loaded_extensions()) and function_exists('curl_init') and function_exists('curl_exec'))
+    if (in_array('curl', get_loaded_extensions()) && function_exists('curl_init') && function_exists('curl_exec'))
     {
-        $disabled_functions = get_php_disabled_functions();
+        $disabled_functions = oa_social_login_get_php_disabled_functions();
 
         //Make sure cURL not been disabled
         if (!in_array('curl_init', $disabled_functions) and !in_array('curl_exec', $disabled_functions))
@@ -52,8 +72,7 @@ function check_curl_available()
         }
     }
 
-    //Not loaded or disabled
-
+    // Either not loaded or been disabled
     return false;
 }
 
@@ -63,11 +82,11 @@ function check_curl_available()
  * @param  boolean $secure use https or http
  * @return boolean         curl is setup
  */
-function check_curl($secure = true)
+function oa_social_login_check_curl($secure = true)
 {
-    if (in_array('curl', get_loaded_extensions()) && function_exists('curl_exec') && !in_array('curl_exec', get_php_disabled_functions()))
+    if (in_array('curl', get_loaded_extensions()) && function_exists('curl_exec') && !in_array('curl_exec', oa_social_login_get_php_disabled_functions()))
     {
-        $result = curl_request(($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
+        $result = oa_social_login_curl_request(($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
         if (is_object($result) && property_exists($result, 'http_code') && $result->http_code == 200)
         {
             if (property_exists($result, 'http_data'))
@@ -92,7 +111,7 @@ function check_curl($secure = true)
  * @param  integer $num_redirects
  * @return object                 request response
  */
-function curl_request($url, $options = array(), $data = array(), $timeout = 30, $num_redirects = 0)
+function oa_social_login_curl_request($url, $options = array(), $data = array(), $timeout = 30, $num_redirects = 0)
 {
     // Store the result
     $result = new \stdClass();
@@ -107,7 +126,7 @@ function curl_request($url, $options = array(), $data = array(), $timeout = 30, 
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($curl, CURLOPT_USERAGENT, USER_AGENT);
+    curl_setopt($curl, CURLOPT_USERAGENT, OA_SOCIAL_LOGIN_USER_AGENT);
 
     // Does not work in PHP Safe Mode, we manually follow the locations if necessary.
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 0);
@@ -213,7 +232,7 @@ function curl_request($url, $options = array(), $data = array(), $timeout = 30, 
                             $header_found = true;
 
                             // Follow redirection url.
-                            $result = curl_request($url_tmp, $options, $data, $timeout, $num_redirects + 1);
+                            $result = oa_social_login_curl_request($url_tmp, $options, $data, $timeout, $num_redirects + 1);
                         }
                     }
                 }
@@ -233,9 +252,7 @@ function curl_request($url, $options = array(), $data = array(), $timeout = 30, 
 }
 
 // ********************************************************
-// ********************************************************
 // FSockopen
-// ********************************************************
 // ********************************************************
 
 /**
@@ -247,7 +264,7 @@ function check_fsockopen_available()
     //Make sure fsockopen has been loaded
     if (function_exists('fsockopen') and function_exists('fwrite'))
     {
-        $disabled_functions = get_php_disabled_functions();
+        $disabled_functions = oa_social_login_get_php_disabled_functions();
 
         //Make sure fsockopen has not been disabled
         if (!in_array('fsockopen', $disabled_functions) and !in_array('fwrite', $disabled_functions))
@@ -269,9 +286,9 @@ function check_fsockopen_available()
  */
 function check_fsockopen($secure = true)
 {
-    if (function_exists('fsockopen') && !in_array('fsockopen', get_php_disabled_functions()))
+    if (function_exists('fsockopen') && !in_array('fsockopen', oa_social_login_get_php_disabled_functions()))
     {
-        $result = fsockopen_request(($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
+        $result = oa_social_login_fsockopen_request(($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
         if (is_object($result) && property_exists($result, 'http_code') && $result->http_code == 200)
         {
             if (property_exists($result, 'http_data'))
@@ -296,7 +313,7 @@ function check_fsockopen($secure = true)
  * @param  integer $num_redirects
  * @return object                 request response
  */
-function fsockopen_request($url, $options = array(), $data = array(), $timeout = 30, $num_redirects = 0)
+function oa_social_login_fsockopen_request($url, $options = array(), $data = array(), $timeout = 30, $num_redirects = 0)
 {
     // Store the result
     $result = new \stdClass();
@@ -355,7 +372,7 @@ function fsockopen_request($url, $options = array(), $data = array(), $timeout =
     // Create HTTP request
     $defaults = array();
     $defaults['Host'] = 'Host: ' . $host;
-    $defaults['User-Agent'] = 'User-Agent: ' . USER_AGENT;
+    $defaults['User-Agent'] = 'User-Agent: ' . OA_SOCIAL_LOGIN_USER_AGENT;
 
     // BASIC AUTH?
     if (isset($options['api_key']) && isset($options['api_secret']))
@@ -445,7 +462,7 @@ function fsockopen_request($url, $options = array(), $data = array(), $timeout =
                     // Found
                     if (!empty($url_parsed))
                     {
-                        $result = fsockopen_request($url_tmp, $options, $data, $timeout, $num_redirects + 1);
+                        $result = oa_social_login_fsockopen_request($url_tmp, $options, $data, $timeout, $num_redirects + 1);
                     }
                 }
             }
@@ -453,6 +470,5 @@ function fsockopen_request($url, $options = array(), $data = array(), $timeout =
     }
 
     // Done
-
     return $result;
 }

@@ -1,20 +1,28 @@
-<!-- start: oa_social_login_main_page --> 
-<div id="oa_social_login_main_page_container" class="oa_social_login_container_block">
-<div class="inner">
-  <div class="content">
-	<h2 class="login-title"></h2>
-	<div class="oneall_social_login_providers" id="oneall_social_login_auth"></div>
-	  <!-- OneAll Social Login : http://www.oneall.com //-->
-	  <script type="text/javascript">
-		// <![CDATA[
-		  var _oneall = _oneall || [];
-		  _oneall.push(['social_login', 'set_providers', ['']]);
-		  _oneall.push(['social_login', 'set_callback_uri', '']);
-		  _oneall.push(['social_login', 'set_custom_css_uri', (("https:" == document.location.protocol) ? "https://secure" : "http://public") + '.oneallcdn.com/css/api/socialize/themes/phpbb/default.css']);
-		  _oneall.push(['social_login', 'do_render_ui', 'oneall_social_login_auth']);
-		// ]]>
-	  </script>
-  </div>
-</div>
-</div>
-<!-- end: oa_social_login_main_page --> 
+<table border="0" cellspacing="{$theme['borderwidth']}" cellpadding="{$theme['tablespace']}" class="tborder oneall_social_login_main_page">
+ <thead>
+  <tr>
+   <td class="thead">
+    <strong>{$oneall_social_login_cfg['caption']}</strong>
+   </td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td class="trow1">
+    <div class="oneall_social_login_main_page" id="{$oneall_social_login_cfg['position']}"></div>
+    <!-- OneAll Social Login : http://www.oneall.com //-->
+    <script data-cfasync="false" type="text/javascript">
+     // <![CDATA[
+      var _oneall = _oneall || [];
+      _oneall.push(['social_login', 'set_providers', ['{$oneall_social_login_cfg['providers']}']]);
+      _oneall.push(['social_login', 'set_callback_uri', '{$oneall_social_login_cfg['callback_uri']}']);
+      _oneall.push(['social_login', 'set_custom_css_uri', '{$oneall_social_login_cfg['css_uri']}']);
+      _oneall.push(['social_login', 'set_grid_sizes', [99, 99]]);
+      _oneall.push(['social_login', 'do_render_ui', '{$oneall_social_login_cfg['position']}']);
+     // ]]>
+    </script>
+   </td>
+  </tr>
+ </tbody>
+</table>
+<br />

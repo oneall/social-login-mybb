@@ -1,33 +1,23 @@
-<!-- end: oa_social_login_login_page --> 
-	</td>
+<tr>
+ <td class="tcat" colspan="2">
+   <strong>{$oneall_social_login_cfg['caption']}</strong> 
+ </td>
 </tr>
 <tr>
-	<td class="trow2" colspan="2">
-		<div id="oa_social_login_login_page_container" class="oa_social_login_container">
-			<div class="inner">
-			  <div class="content">
-				<h2 class="login-title"></h2>
-				<div class="oneall_social_login_providers" id="oneall_social_login_auth"></div>
-				  <!-- OneAll Social Login : http://www.oneall.com //-->
-				  <script type="text/javascript">
-					// <![CDATA[
-					  var _oneall = _oneall || [];
-					  _oneall.push(['social_login', 'set_providers', ['']]);
-					  _oneall.push(['social_login', 'set_callback_uri', '']);
-					  _oneall.push(['social_login', 'set_custom_css_uri', (("https:" == document.location.protocol) ? "https://secure" : "http://public") + '.oneallcdn.com/css/api/socialize/themes/phpbb/default.css']);
-					  _oneall.push(['social_login', 'do_render_ui', 'oneall_social_login_auth']);
-					// ]]>
-				  </script>
-			  </div>
-			</div>
-		</div>
-	</td>
+ <td class="trow2" colspan="2">
+  <div class="oa_social_login_login_page">
+   <div class="oneall_social_login_providers" id="{$oneall_social_login_cfg['position']}" style="margin:10px 0 0;max-height:70px;overflow: hidden;"></div>
+   <!-- OneAll Social Login : http://www.oneall.com //-->
+   <script data-cfasync="false" type="text/javascript">
+    // <![CDATA[
+     var _oneall = _oneall || [];
+     _oneall.push(['social_login', 'set_providers', ['{$oneall_social_login_cfg['providers']}']]);
+     _oneall.push(['social_login', 'set_callback_uri', '{$oneall_social_login_cfg['callback_uri']}']);
+     _oneall.push(['social_login', 'set_custom_css_uri', '{$oneall_social_login_cfg['css_uri']}']);
+     _oneall.push(['social_login', 'set_grid_sizes', [4, 1]]);
+     _oneall.push(['social_login', 'do_render_ui', '{$oneall_social_login_cfg['position']}']);
+    // ]]>
+   </script>
+  </div>  
+ </td>
 </tr>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("a.login").on("click", function(){
-			setTimeout(function(){ $("#oa_social_login_login_page_container iframe").height('60px'); }, 300);			
-		});
-	});
-</script>
-<!-- end: oa_social_login_login_page --> 
