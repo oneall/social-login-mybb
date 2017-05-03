@@ -712,8 +712,23 @@ function oa_social_login_remove_tokens_for_uid($uid)
 }
 
 /**
+ * Invert CamelCase -> camel_case
+ * @param string $input CamelCase String
+ */
+function oa_social_login_undo_camel_case ($input)
+{
+    preg_match_all ('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+    $ret = $matches [0];
+    foreach ($ret as &$match)
+    {
+        $match = ($match == strtoupper ($match) ? strtolower ($match) : lcfirst ($match));
+    }
+    return implode ('_', $ret);
+}
+
+/**
  * Extracts the social network data from a result-set returned by the OneAll API.
- *  * @param  object $data oa_social_login_user_token id
+ * @param  object $data Data received from the OneAll API
  */
 function oa_social_login_extract_social_network_profile ($data)
 {
@@ -1018,7 +1033,7 @@ function oa_social_login_extract_social_network_profile ($data)
                                 // Add recommender details
                                 foreach (get_object_vars($recommendation->recommender) as $field => $value)
                                 {
-                                    $data_entry['recommender'][self::undo_camel_case($field)] = $value;
+                                    $data_entry['recommender'][oa_social_login_undo_camel_case($field)] = $value;
                                 }
                             }
 
@@ -1126,7 +1141,7 @@ function oa_social_login_extract_social_network_profile ($data)
                                 // Add all fields.
                                 foreach (get_object_vars($organization) as $field => $value)
                                 {
-                                    $data_entry[self::undo_camel_case($field)] = $value;
+                                    $data_entry[oa_social_login_undo_camel_case($field)] = $value;
                                 }
 
                                 // Add to list.

@@ -35,7 +35,7 @@ function oa_social_login_info()
         'website' => 'http://www.oneall.com',
         'author' => 'Damien ZARA',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.0',
+        'version' => '2.1',
         'compatibility' => '16*,18*'
     ];
 }
