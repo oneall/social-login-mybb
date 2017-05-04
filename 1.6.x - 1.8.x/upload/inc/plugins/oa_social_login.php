@@ -67,6 +67,9 @@ if (defined('IN_ADMINCP'))
 
     // Ajax
     $plugins->add_hook('admin_load', 'oa_social_login_admin_ajax');
+
+    // Settings changed
+    $plugins->add_hook('admin_config_settings_change', 'oa_social_login_settings_change');
 }
 
 // **************************************************
@@ -413,7 +416,43 @@ function oa_social_login_settings_gid()
 }
 
 /**
- * Hook for Ajax in the administration area
+ * Hook called when updating the settings in the administration area
+ * @return void
+ */
+function oa_social_login_settings_change ()
+{
+    global $mybb;
+
+    // Make sure we are saving our settings
+    if (isset ($mybb->input['upsetting']) && is_array ($mybb->input['upsetting']))
+    {
+        // Update the subdomain
+        if (! empty ($mybb->input['upsetting']['oa_social_login_subdomain']))
+        {
+            // The full domain has been entered.
+            if (preg_match("/([a-z0-9\-]+)\.api\.oneall\.com/i", $mybb->input['upsetting']['oa_social_login_subdomain'], $matches))
+            {
+                // Only keep the first part
+                $mybb->input['upsetting']['oa_social_login_subdomain'] = $matches[1];
+            }
+        }
+
+        // Update the Public Key
+        if (! empty ($mybb->input['upsetting']['oa_social_login_public_key']))
+        {
+            $mybb->input['upsetting']['oa_social_login_public_key'] = trim ($mybb->input['upsetting']['oa_social_login_public_key']);
+        }
+
+        // Update the Private Key
+        if (! empty ($mybb->input['upsetting']['oa_social_login_private_key']))
+        {
+            $mybb->input['upsetting']['oa_social_login_private_key'] = trim ($mybb->input['upsetting']['oa_social_login_private_key']);
+        }
+    }
+}
+
+/**
+ * Hook for Autodetect/Verify Ajax in the administration area
  * @return void
  */
 function oa_social_login_admin_ajax ()
@@ -1289,8 +1328,8 @@ function oa_social_login_callback()
 
             // API Credentials
             $api_opts = array();
-            $api_opts['api_key'] = trim($mybb->settings['oa_social_login_public_key']);
-            $api_opts['api_secret'] = trim($mybb->settings['oa_social_login_private_key']);
+            $api_opts['api_key'] = $mybb->settings['oa_social_login_public_key'];
+            $api_opts['api_secret'] = $mybb->settings['oa_social_login_private_key'];
 
             // Retrieve connection details
             $result = oa_social_login_do_api_request($api_connection_handler, $api_resource_url, $api_opts);
@@ -1653,7 +1692,7 @@ function oa_social_login_register_user($user_info = array())
 
     require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
 
-    $lang->load("member");
+    $lang->load('member');
 
     if ($mybb->settings['regtype'] != "randompass" && !isset($mybb->cookies['coppauser']))
     {

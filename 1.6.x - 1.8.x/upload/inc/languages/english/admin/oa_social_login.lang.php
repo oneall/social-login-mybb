@@ -122,8 +122,6 @@ $l['setting_oa_social_login_create_account_discover'] = "<a href=\"http://docs.o
 $l['setting_oa_social_login_create_account_contact'] = "<a href=\"http://www.oneall.com/company/contact-us/\" class=\"external\" target=\"_blank\">Contact us</a> if you have feedback or need assistance!";
 $l['setting_oa_social_login_create_account_use'] = "To be able to use Social Login, you first of all have to create a free account at <a href=\"https://app.oneall.com/signup/\" class=\"external\" target=\"_blank\">http://www.oneall.com</a> and setup a Site.";
 
-$l['oa_social_login_error'] = 'An error occured please retry later.';
-
 // API Loading Message
 $l['oa_social_login_api_please_wait'] = 'Contacting API - please wait this may take a few minutes ...';
 
