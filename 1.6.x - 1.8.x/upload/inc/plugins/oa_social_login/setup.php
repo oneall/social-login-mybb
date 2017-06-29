@@ -323,8 +323,8 @@ function oa_social_login_uninstall()
  */
 function oa_social_login_add_stylesheet()
 {
-    global $db;
-    require_once MYBB_ROOT . "admin/inc/functions_themes.php";
+    global $db, $mybb;
+    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions_themes.php";
 
     $name = 'oa_social_login.css';
 
@@ -367,8 +367,8 @@ function oa_social_login_add_stylesheet()
  */
 function oa_social_login_delete_stylesheet($name = 'oa_social_login.css')
 {
-    global $db;
-    require_once MYBB_ROOT . "admin/inc/functions_themes.php";
+    global $mybb, $db;
+    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions_themes.php";
 
     // Delete stylesheets.
     $where = "name='" . $db->escape_string($name) . "'";
