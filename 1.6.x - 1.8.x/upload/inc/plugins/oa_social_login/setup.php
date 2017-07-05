@@ -33,9 +33,9 @@ function oa_social_login_info()
         'name' => 'OneAll Social Login',
         'description' => 'Allow your visitors to comment, login and register with 30+ Social Networks like Twitter, Facebook, LinkedIn, Instagram, Вконтакте, Google or Yahoo.',
         'website' => 'http://www.oneall.com',
-        'author' => 'Damien ZARA',
+        'author' => 'OneAll',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.2',
+        'version' => '2.3',
         'compatibility' => '16*,18*'
     ];
 }
@@ -326,38 +326,29 @@ function oa_social_login_add_stylesheet()
     global $db, $mybb;
     require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions_themes.php";
 
-    $name = 'oa_social_login.css';
+    // Read our CSS
+    $css_file_name = 'oa_social_login.css';
+    $css_file_path = (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . $css_file_name);
+    $css_file_contents =  file_get_contents($css_file_path);
 
-    // Insert our CSS
-    $css_directory = new DirectoryIterator(dirname(__FILE__) . '/css');
-    $stylesheet_content = "";
-    foreach ($css_directory as $file)
-    {
-        $is_file = !$file->isDot() and !$file->isDir();
+    // myBB Main Style, global.css
+    $themestylesheets_tid = 1;
 
-        if (pathinfo($file->getFilename(), PATHINFO_EXTENSION) == 'css' and $is_file)
-        {
-            $stylesheet_content .= file_get_contents($file->getPathName());
-        }
-    }
-
-    // myBB Main Style
-    $tid = 1;
-
-    // Add stylesheet to the master template so it becomes inherited.
-    $oa_stylesheet = array(
-        'sid' => null,
-        'name' => $name,
-        'tid' => $tid,
-        'stylesheet' => $stylesheet_content,
-        'cachefile' => $name,
+    // Add stylesheet to the master template.
+    $css_stylesheet = array(
+        'name' => $css_file_name,
+        'tid' => $themestylesheets_tid,
+        'attachedto' => '',
+        'stylesheet' => $css_file_contents,
+        'cachefile' => $css_file_name,
         'lastmodified' => TIME_NOW
     );
-    $sid = $db->insert_query('themestylesheets', $oa_stylesheet);
-    $oa_stylesheet['sid'] = intval($sid);
 
-    cache_stylesheet($oa_stylesheet['tid'], $oa_stylesheet['cachefile'], $oa_stylesheet['stylesheet']);
-    update_theme_stylesheet_list($tid); // includes all children
+    // Add identifier
+    $css_stylesheet['sid'] = $db->insert_query('themestylesheets', $css_stylesheet);
+
+    cache_stylesheet($css_stylesheet['tid'], $css_stylesheet['cachefile'], $css_stylesheet['stylesheet']);
+    update_theme_stylesheet_list($themestylesheets_tid);
 }
 
 /**

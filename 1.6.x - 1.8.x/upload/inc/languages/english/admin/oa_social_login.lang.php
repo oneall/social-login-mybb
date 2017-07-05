@@ -96,18 +96,18 @@ $l['setting_oa_social_login_link_caption_title'] = "Social Link \ Caption";
 $l['setting_oa_social_login_link_caption_desc'] = "This title is displayed above the Social Link icons in the user's profile.";
 
 
-$l['setting_oa_social_login_avatars_display'] = "Scial network avatars";
+$l['setting_oa_social_login_avatars_display'] = "Do you want to use Social Network avatars?";
 
 $l['setting_oa_social_login_avatar'] = "If enabled the user's social network photo will be user as avatar on the forum.";
 $l['setting_oa_social_login_avatar_desc'] = "Enable social network avatars ? ";
 
 
-$l['setting_oa_social_login_redirection_display'] = "Redirect after login";
+$l['setting_oa_social_login_redirection_display'] = "Where do you want to redirect users to?";
 $l['setting_oa_social_login_redirection_desc'] = "Redirect users to this page after they have connected with their social network account: ";
 $l['setting_oa_social_login_redirection'] = "Enter a full URL to a page of your myBB. If left empty the user stays on the same page.";
 
 
-$l['setting_oa_social_login_social_network_display'] = "Choose the social networks to enable on your forum";
+$l['setting_oa_social_login_social_network_display'] = "Which Social Networks do you want to enable?";
 
 $l['setting_oa_social_login_where_display'] = "Where do you want to display Social Login ?";
 

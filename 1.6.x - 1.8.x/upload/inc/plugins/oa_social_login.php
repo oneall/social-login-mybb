@@ -231,7 +231,7 @@ function oa_social_login_admin_header()
         if ( ! empty ($mybb->input['gid']) && $mybb->input['gid'] == oa_social_login_settings_gid ())
         {
             // Stylesheet
-            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="/inc/plugins/oa_social_login/css/admin.css" />';
+            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="/inc/plugins/oa_social_login/css/oa_social_login.css" />';
 
             // Ajax
             $page->extra_header .= '<script src="/inc/plugins/oa_social_login/js/admin.js"></script>';

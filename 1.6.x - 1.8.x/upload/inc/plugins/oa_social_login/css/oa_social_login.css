@@ -151,6 +151,11 @@ tr[id^="row_setting_oa_social_login_provider"]>td>label {
     width: 140px;
 }
 
+tr[id^="row_setting_oa_social_login_provider"]>td .label_radio_on,
+tr[id^="row_setting_oa_social_login_provider"]>td .label_radio_off {
+    margin:0 5px;
+}
+
 tr[id^="row_setting_oa_social_login_provider"]>td>.description {
     display: inline-block;
     margin: 0 5px;
