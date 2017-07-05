@@ -922,6 +922,7 @@ function oa_social_login_extract_social_network_profile ($data)
                     // Email Address.
                     $data['user_email'] = '';
                     $data['user_email_is_verified'] = false;
+                    $data['user_email_is_random'] = false;
 
                     // Extract emails.
                     if (property_exists($identity, 'emails') && is_array($identity->emails))
@@ -1452,21 +1453,32 @@ function oa_social_login_callback()
                                 $user_data['user_login'] = $user_login_tmp;
                             }
 
-                            // Determine the usergroup
-                            if ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser']))
+                            // Is this a random email?
+                            $user_data['user_email_is_real'] = true;
+
+                            // Email is required and must be unique
+                            while (empty ($user_data['user_email']) || email_already_in_use($user_data['user_email']))
                             {
+                            	// Generate random email
+                            	$user_data['user_email'] = oa_social_login_create_rand_email();
+
+                            	// This is a random email
+                            	$user_data['user_email_is_real'] = false;
+                            }
+
+
+                            // Determine the usergroup
+                            if ($user_data['user_email_is_real'] && ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser'])))
+                            {
+                                // Awaiting Activation
                                 $user_data['user_group'] = 5;
                             }
                             else
                             {
+                                // Registered
                                 $user_data['user_group'] = 2;
                             }
 
-                            // Email must be unique
-                            while (email_already_in_use($user_data['user_email']))
-                            {
-                                $user_data['user_email'] = oa_social_login_create_rand_email();
-                            }
 
                             // Set up user handler.
                             require_once MYBB_ROOT . "inc/datahandlers/user.php";
