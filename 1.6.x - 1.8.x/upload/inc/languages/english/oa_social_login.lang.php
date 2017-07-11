@@ -24,3 +24,9 @@
  */
 
 $l['oa_social_login_error'] = 'An error occured please retry later.';
+$l['oa_social_login_error_unknown'] = 'Could not process connection_token %s. Error: Unknown';
+$l['oa_social_login_error_invalid_data'] = 'Could not process connection_token %s. Error: Could not extract social network profile';
+$l['oa_social_login_error_invalid_api_result'] = 'Could not process connection_token %s. Error: Invalid API result received';
+$l['oa_social_login_error_invalid_http_code'] = 'Could not process connection_token %s. Error: Unhandled HTTP code %s';
+$l['oa_social_login_error_invalid_subdomain'] = 'Could not process connection_token %s. Error: The subdomain is either wrong or has not been setup in the settings';
+$l['oa_social_login_error_invalid_user'] = 'Could not process connection_token %s. Error: Could not validate user (%s)';

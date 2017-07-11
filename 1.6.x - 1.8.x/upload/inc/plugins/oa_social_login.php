@@ -777,16 +777,9 @@ function oa_social_login_extract_social_network_profile ($data)
         // Decode the social network profile Data.
         $social_data = json_decode($data->http_data);
 
-        // Make sur that the data has beeen decoded properly
+        // Make sure that the data has beeen decoded properly
         if (is_object($social_data))
         {
-            // Provider may report an error inside message:
-            if (!empty($social_data->response->result->status->flag) && $social_data->response->result->status->code >= 400)
-            {
-                error_log($social_data->response->result->status->info . ' (' . $social_data->response->result->status->code . ')');
-                return false;
-            }
-
             // Container for user data
             $data = array();
 
@@ -1336,256 +1329,262 @@ function oa_social_login_callback()
             $result = oa_social_login_do_api_request($api_connection_handler, $api_resource_url, $api_opts);
 
             // Check result
-            if (is_object($result) && property_exists($result, 'http_code') && $result->http_code == 200)
+            if (is_object($result) && property_exists($result, 'http_code'))
             {
-                // Extract data
-                if (($user_data = oa_social_login_extract_social_network_profile($result)) !== false)
-                {
-                    // Get user id by user_token
-                    $userid = oa_social_login_get_userid_by_user_token($user_data['user_token']);
+            	if ($result->http_code == 200)
+            	{
+	                // Extract data
+	                if (($user_data = oa_social_login_extract_social_network_profile($result)) !== false)
+	                {
+	                    // Get user id by user_token
+	                    $userid = oa_social_login_get_userid_by_user_token($user_data['user_token']);
 
-                    // Social Link
-                    if ($action == 'social_link')
-                    {
-                        // Make sure we have a user
-                        if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
-                        {
-                            // Logged in user
-                            $userid_current = $mybb->user['uid'];
+	                    // Social Link
+	                    if ($action == 'social_link')
+	                    {
+	                        // Make sure we have a user
+	                        if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
+	                        {
+	                            // Logged in user
+	                            $userid_current = $mybb->user['uid'];
 
-                            // Synchronize?
-                            $synchronize_identities = true;
+	                            // Synchronize?
+	                            $synchronize_identities = true;
 
-                            // There is already a userid for this user_token
-                            if (!empty($userid))
-                            {
-                                // The existing user_id does not match the logged in user
-                                if ($userid != $userid_current)
-                                {
-                                    // Show an error to the user.
-                                    // TODO: ERROR
+	                            // There is already a userid for this user_token
+	                            if (!empty($userid))
+	                            {
+	                                // The existing user_id does not match the logged in user
+	                                if ($userid != $userid_current)
+	                                {
+	                                    // Show an error to the user.
+	                                    // TODO: ERROR
 
-                                    // Do not update the tokens.
-                                    $synchronize_identities = false;
-                                }
-                            }
+	                                    // Do not update the tokens.
+	                                    $synchronize_identities = false;
+	                                }
+	                            }
 
-                            // Synchronize
-                            if ($synchronize_identities)
-                            {
-                                oa_social_login_synchronize_identities($userid_current, $user_data['user_token'], $user_data['user_identites']);
-                            }
-                        }
-                    }
-                    // Social Login
-                    else
-                    {
-                        // No user for this user_token found
-                        if (!is_numeric($userid))
-                        {
-                            // Automatic Link enabled?
-                            if (!empty($mybb->settings['oa_social_login_link_verified_accounts']))
-                            {
-                                // Only if email is verified
-                                if (!empty($user_data['user_email']) && $user_data['user_email_is_verified'])
-                                {
-                                    // Read existing user
-                                    $userid_tmp = oa_social_login_get_userid_for_email($user_data['user_email']);
+	                            // Synchronize
+	                            if ($synchronize_identities)
+	                            {
+	                                oa_social_login_synchronize_identities($userid_current, $user_data['user_token'], $user_data['user_identites']);
+	                            }
+	                        }
+	                    }
+	                    // Social Login
+	                    else
+	                    {
+	                        // No user for this user_token found
+	                        if (!is_numeric($userid))
+	                        {
+	                            // Automatic Link enabled?
+	                            if (!empty($mybb->settings['oa_social_login_link_verified_accounts']))
+	                            {
+	                                // Only if email is verified
+	                                if (!empty($user_data['user_email']) && $user_data['user_email_is_verified'])
+	                                {
+	                                    // Read existing user
+	                                    $userid_tmp = oa_social_login_get_userid_for_email($user_data['user_email']);
 
-                                    // We have found a user id for this email
-                                    if (!empty($userid_tmp))
-                                    {
-                                        // We can login the user
-                                        $userid = $userid_tmp;
+	                                    // We have found a user id for this email
+	                                    if (!empty($userid_tmp))
+	                                    {
+	                                        // We can login the user
+	                                        $userid = $userid_tmp;
 
-                                        // Does the user already got a user token ?
-                                        $user_token_linked = oa_social_login_get_user_token_by_userid ($userid_tmp);
+	                                        // Does the user already got a user token ?
+	                                        $user_token_linked = oa_social_login_get_user_token_by_userid ($userid_tmp);
 
-                                        // The user already has a different user_token
-                                        if (!empty($user_token_linked))
-                                        {
-                                            // Linked identity_token to existing user_token
-                                            $user_identites_linked = oa_social_login_relink_identity($user_data['identity_token'], $user_token_linked);
+	                                        // The user already has a different user_token
+	                                        if (!empty($user_token_linked))
+	                                        {
+	                                            // Linked identity_token to existing user_token
+	                                            $user_identites_linked = oa_social_login_relink_identity($user_data['identity_token'], $user_token_linked);
 
-                                            // If the relink is successfully, update the identities
-                                            if (is_array ($user_identites_linked))
-                                            {
-                                                // Use new user_token
-                                                $user_data['user_token'] = $user_token_linked;
+	                                            // If the relink is successfully, update the identities
+	                                            if (is_array ($user_identites_linked))
+	                                            {
+	                                                // Use new user_token
+	                                                $user_data['user_token'] = $user_token_linked;
 
-                                                // Use new identites
-                                                $user_data['user_identites'] = $user_identites_linked;
-                                            }
-                                        }
+	                                                // Use new identites
+	                                                $user_data['user_identites'] = $user_identites_linked;
+	                                            }
+	                                        }
 
-                                        // Synchronize
-                                        oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
-                                    }
-                                }
-                            }
-                        }
-                        // User found for this user_token
-                        else
-                        {
-                            oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
-                        }
+	                                        // Synchronize
+	                                        oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
+	                                    }
+	                                }
+	                            }
+	                        }
+	                        // User found for this user_token
+	                        else
+	                        {
+	                            oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
+	                        }
 
-                        // New User
-                        if (!is_numeric($userid))
-                        {
-                            // Username is mandatory
-                            if (empty($user_data['user_login']))
-                            {
-                                $user_data['user_login'] = $user_identity_provider . 'User';
-                            }
+	                        // New User
+	                        if (!is_numeric($userid))
+	                        {
+	                            // Username is mandatory
+	                            if (empty($user_data['user_login']))
+	                            {
+	                                $user_data['user_login'] = $user_identity_provider . 'User';
+	                            }
 
-                            // Username must be unique
-                            if (username_exists($user_data['user_login']))
-                            {
-                                $i = 1;
-                                $user_login_tmp = $user_data['user_login'];
-                                do
-                                {
-                                    $user_login_tmp = $user_data['user_login'] . ($i++);
-                                }
-                                while (username_exists($user_login_tmp));
+	                            // Username must be unique
+	                            if (username_exists($user_data['user_login']))
+	                            {
+	                                $i = 1;
+	                                $user_login_tmp = $user_data['user_login'];
+	                                do
+	                                {
+	                                    $user_login_tmp = $user_data['user_login'] . ($i++);
+	                                }
+	                                while (username_exists($user_login_tmp));
 
-                                $user_data['user_login'] = $user_login_tmp;
-                            }
+	                                $user_data['user_login'] = $user_login_tmp;
+	                            }
 
-                            // Is this a random email?
-                            $user_data['user_email_is_real'] = true;
+	                            // Is this a random email?
+	                            $user_data['user_email_is_real'] = true;
 
-                            // Email is required and must be unique
-                            while (empty ($user_data['user_email']) || email_already_in_use($user_data['user_email']))
-                            {
-                            	// Generate random email
-                            	$user_data['user_email'] = oa_social_login_create_rand_email();
+	                            // Email is required and must be unique
+	                            while (empty ($user_data['user_email']) || email_already_in_use($user_data['user_email']))
+	                            {
+	                            	// Generate random email
+	                            	$user_data['user_email'] = oa_social_login_create_rand_email();
 
-                            	// This is a random email
-                            	$user_data['user_email_is_real'] = false;
-                            }
-
-
-                            // Determine the usergroup
-                            if ($user_data['user_email_is_real'] && ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser'])))
-                            {
-                                // Awaiting Activation
-                                $user_data['user_group'] = 5;
-                            }
-                            else
-                            {
-                                // Registered
-                                $user_data['user_group'] = 2;
-                            }
+	                            	// This is a random email
+	                            	$user_data['user_email_is_real'] = false;
+	                            }
 
 
-                            // Set up user handler.
-                            require_once MYBB_ROOT . "inc/datahandlers/user.php";
+	                            // Determine the usergroup
+	                            if ($user_data['user_email_is_real'] && ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser'])))
+	                            {
+	                                // Awaiting Activation
+	                                $user_data['user_group'] = 5;
+	                            }
+	                            else
+	                            {
+	                                // Registered
+	                                $user_data['user_group'] = 2;
+	                            }
 
-                            // Set the data for the new user.
-                            $mybb_user_data = array(
-                                'username' => $user_data['user_login'],
-                                'password' => $user_data['user_password_rand'],
-                                'password2' => $user_data['user_password_rand'],
-                                'email' => $user_data['user_email'],
-                                'usergroup' => $user_data['user_group'],
-                                'additionalgroups' => '',
-                                'registration' => true,
-                                'signature' => '',
-                                'avatar' => '',
-                                'avatartype' => '',
-                                'profile_fields_editable' => true);
 
-                            // Use avatar from Social Network profile?
-                            if (!empty($mybb->settings['oa_social_login_avatar']))
-                            {
-                                // Picture found?
-                                if (!empty($user_data['user_picture']))
-                                {
-                                    $mybb_user_data['avatar'] = $user_data['user_picture'];
-                                    $mybb_user_data['avatartype'] = 'remote';
-                                }
-                                // Thumbnail found?
-                                else
-                                {
-                                    if (!empty($user_data['user_thumbnail']))
-                                    {
-                                        $mybb_user_data['avatar'] = $user_data['user_thumbnail'];
-                                        $mybb_user_data['avatartype'] = 'remote';
-                                    }
-                                }
-                            }
+	                            // Set up user handler.
+	                            require_once MYBB_ROOT . "inc/datahandlers/user.php";
 
-                            // Set the data of the user in the datahandler.
-                            $user_data_handler = new UserDataHandler('insert');
-                            $user_data_handler->set_data($mybb_user_data);
+	                            // Set the data for the new user.
+	                            $mybb_user_data = array(
+	                                'username' => $user_data['user_login'],
+	                                'password' => $user_data['user_password_rand'],
+	                                'password2' => $user_data['user_password_rand'],
+	                                'email' => $user_data['user_email'],
+	                                'usergroup' => $user_data['user_group'],
+	                                'additionalgroups' => '',
+	                                'registration' => true,
+	                                'signature' => '',
+	                                'avatar' => '',
+	                                'avatartype' => '',
+	                                'profile_fields_editable' => true);
 
-                            // Validate the user data and check for errors
-                            if (!$user_data_handler->validate_user())
-                            {
-                            	// Read errors
-                                $errors = $user_data_handler->get_friendly_errors();
+	                            // Use avatar from Social Network profile?
+	                            if (!empty($mybb->settings['oa_social_login_avatar']))
+	                            {
+	                                // Picture found?
+	                                if (!empty($user_data['user_picture']))
+	                                {
+	                                    $mybb_user_data['avatar'] = $user_data['user_picture'];
+	                                    $mybb_user_data['avatartype'] = 'remote';
+	                                }
+	                                // Thumbnail found?
+	                                else
+	                                {
+	                                    if (!empty($user_data['user_thumbnail']))
+	                                    {
+	                                        $mybb_user_data['avatar'] = $user_data['user_thumbnail'];
+	                                        $mybb_user_data['avatartype'] = 'remote';
+	                                    }
+	                                }
+	                            }
 
-                                // Log error
-                                oa_social_login_log_error ('Error while processing connection_token '. $connection_token .'(User validation errors: '.implode(",", $errors).')', __FILE__, __LINE__);
-                            }
-                            // Valid user data, create user
-                            else
-                            {
-                                // Other actions
-                                $plugins->run_hooks('member_do_register_start');
+	                            // Set the data of the user in the datahandler.
+	                            $user_data_handler = new UserDataHandler('insert');
+	                            $user_data_handler->set_data($mybb_user_data);
 
-                                // Add User
-                                $mybb_new_user = $user_data_handler->insert_user();
+	                            // Validate the user data and check for errors
+	                            if (!$user_data_handler->validate_user())
+	                            {
+	                            	// Read errors
+	                                $errors = $user_data_handler->get_friendly_errors();
 
-                                // Synchronize
-                                oa_social_login_synchronize_identities($mybb_new_user['uid'], $user_data['user_token'], $user_data['user_identites']);
+	                                // Log error
+	                                oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_user, $connection_token, implode(",", $errors)), __FILE__, __LINE__);
+	                            }
+	                            // Valid user data, create user
+	                            else
+	                            {
+	                                // Other actions
+	                                $plugins->run_hooks('member_do_register_start');
 
-                                // Register and redirect user
-                                oa_social_login_register_user($mybb_new_user);
-                            }
-                        }
-                        // Existing user
-                        else
-                        {
-                            // Login
-                            oa_social_login_login_userid($userid);
-                        }
+	                                // Add User
+	                                $mybb_new_user = $user_data_handler->insert_user();
 
-                        // Log error
-                        oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Error Unknown)', __FILE__, __LINE__);
+	                                // Synchronize
+	                                oa_social_login_synchronize_identities($mybb_new_user['uid'], $user_data['user_token'], $user_data['user_identites']);
 
-                        // An error occured
-                        oa_social_login_redirect(true, $lang->oa_social_login_error);
-                    }
-                }
-                else
-                {
-                	// Log error
-                	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Could not extract social network profile)', __FILE__, __LINE__);
+	                                // Register and redirect user
+	                                oa_social_login_register_user($mybb_new_user);
+	                            }
+	                        }
+	                        // Existing user
+	                        else
+	                        {
+	                            // Login
+	                            oa_social_login_login_userid($userid);
+	                        }
 
-                	// Display message
-                    oa_social_login_redirect(true, $lang->oa_social_login_error);
-                }
+	                        // Unknown result
+	                        oa_social_login_log_error (sprintf ($lang->oa_social_login_error_unknown, $connection_token), __FILE__, __LINE__);
+	                    }
+	                }
+	                else
+	                {
+	                	// Invalid user data
+	                	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_data, $connection_token), __FILE__, __LINE__);
+	                }
+            	}
+            	// Invalid Subdomain
+            	elseif ($result->http_code == 404)
+            	{
+            		// Log error
+            		oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
+            	}
+            	else
+            	{
+            		// Unhandled HTTP code
+            		oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_http_code, $connection_token, $result->http_code), __FILE__, __LINE__);
+            	}
+
             }
             else
             {
-            	// Log error
-            	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Unhandled HTTP code '.$result->http_code.')', __FILE__, __LINE__);
-
-            	// Display message
-                oa_social_login_redirect(true, $lang->oa_social_login_error);
+            	// Invalid API Result
+            	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_api_result, $connection_token, $result->http_code), __FILE__, __LINE__);
             }
         }
         else
         {
-        	// Log error
-        	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Subdomain missing in settings)', __FILE__, __LINE__);
-
-        	// Display message
-            oa_social_login_redirect(true, $lang->oa_social_login_error);
+        	// Invalid Subdomain
+        	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
         }
+
+        // Display error
+        oa_social_login_redirect(true, $lang->oa_social_login_error);
     }
 }
 
@@ -1721,7 +1720,7 @@ function oa_social_login_log_error ($message, $file, $line)
 	global $mybb;
 
 	// Build message
-	$message = "[ONEALL SOCIAL LOGIN] Error [".$message."] File [".$file."] Line [".$line."]";
+	$message = "[ONEALL SOCIAL LOGIN] ".$message." [".$file."::".$line."]\n";
 
 	// Custom log location
 	if(trim($mybb->settings['errorloglocation']) != "")
