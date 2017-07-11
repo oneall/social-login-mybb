@@ -360,7 +360,7 @@ function oa_social_login_load_plugin($position, $return = false)
 }
 
 /**
- * Generate a random password
+ * Generates a random password
  * @return string password
  */
 function oa_social_login_generate_password()
@@ -1524,7 +1524,11 @@ function oa_social_login_callback()
                             // Validate the user data and check for errors
                             if (!$user_data_handler->validate_user())
                             {
+                            	// Read errors
                                 $errors = $user_data_handler->get_friendly_errors();
+
+                                // Log error
+                                oa_social_login_log_error ('Error while processing connection_token '. $connection_token .'(User validation errors: '.implode(",", $errors).')', __FILE__, __LINE__);
                             }
                             // Valid user data, create user
                             else
@@ -1549,22 +1553,37 @@ function oa_social_login_callback()
                             oa_social_login_login_userid($userid);
                         }
 
+                        // Log error
+                        oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Error Unknown)', __FILE__, __LINE__);
+
                         // An error occured
                         oa_social_login_redirect(true, $lang->oa_social_login_error);
                     }
                 }
                 else
                 {
+                	// Log error
+                	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Could not extract social network profile)', __FILE__, __LINE__);
+
+                	// Display message
                     oa_social_login_redirect(true, $lang->oa_social_login_error);
                 }
             }
             else
             {
+            	// Log error
+            	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Unhandled HTTP code '.$result->http_code.')', __FILE__, __LINE__);
+
+            	// Display message
                 oa_social_login_redirect(true, $lang->oa_social_login_error);
             }
         }
         else
         {
+        	// Log error
+        	oa_social_login_log_error ('Error while processing connection_token '.$connection_token. '(Subdomain missing in settings)', __FILE__, __LINE__);
+
+        	// Display message
             oa_social_login_redirect(true, $lang->oa_social_login_error);
         }
     }
@@ -1691,6 +1710,29 @@ function oa_social_login_login_userid($userid)
 
     // Error
     return false;
+}
+
+/**
+ * Logs an error
+ * @return void
+ */
+function oa_social_login_log_error ($message, $file, $line)
+{
+	global $mybb;
+
+	// Build message
+	$message = "[ONEALL SOCIAL LOGIN] Error [".$message."] File [".$file."] Line [".$line."]";
+
+	// Custom log location
+	if(trim($mybb->settings['errorloglocation']) != "")
+	{
+		@error_log($message, 3, $mybb->settings['errorloglocation']);
+	}
+	// PHP system logger
+	else
+	{
+		@error_log($message, 0);
+	}
 }
 
 /**
