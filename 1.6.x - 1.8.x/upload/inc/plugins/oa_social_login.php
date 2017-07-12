@@ -230,16 +230,19 @@ function oa_social_login_admin_header()
     {
         if ( ! empty ($mybb->input['gid']) && $mybb->input['gid'] == oa_social_login_settings_gid ())
         {
-            // Stylesheet
-            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="/inc/plugins/oa_social_login/css/oa_social_login.css" />';
+        	// Compute plugin folder
+        	$plugin_url = rtrim ($mybb->settings['bburl'],'/ '). '/inc/plugins/oa_social_login/';
 
-            // Ajax
-            $page->extra_header .= '<script src="/inc/plugins/oa_social_login/js/admin.js"></script>';
+            // Add CSS Stylesheet
+            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="' . $plugin_url .'css/oa_social_login.css" />';
+
+            // Add JavaScript
+            $page->extra_header .= '<script src="' . $plugin_url .'js/admin.js"></script>';
 
             // MyBB < 1.8 has no jQuery
             if ($mybb->version_code < 1800)
             {
-                $page->extra_header .= '<script src="/inc/plugins/oa_social_login/js/jquery.min.js"></script>';
+                $page->extra_header .= '<script src="' . $plugin_url .'js/jquery.min.js"></script>';
             }
         }
     }
