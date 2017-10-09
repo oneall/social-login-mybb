@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package   	OneAll Social Login
- * @copyright 	Copyright 2011-2017 http://www.oneall.com
- * @license   	GNU/GPL 2 or later
+ * @package       OneAll Social Login
+ * @copyright     Copyright 2011-2017 http://www.oneall.com
+ * @license       GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,12 +50,12 @@ function oa_social_login_get_settings()
         <p>
             <a href=\"https://app.oneall.com/signup/\" class=\"button1 external\" target=\"_blank\">' . $lang->oa_social_login_setup_free_account . '</a> | <a href=\"https://app.oneall.com/applications/\" class=\"button1 external\" target=\"_blank\">' . $lang->oa_social_login_create_credential . '</a>
         </p>
-    </div>'],
+    </div>' ],
         'api_connection_display' => [
             'optionscode' => 'php
     <p>
        <legend>' . $lang->setting_oa_social_login_api_connection_display . '</legend>
-    </p>'],
+    </p>' ],
         'connection_handler' => [
             'title' => $lang->setting_oa_social_login_api_connection_handler,
             'description' => $lang->setting_oa_social_login_api_connection_handler_desc,
@@ -76,7 +76,7 @@ function oa_social_login_get_settings()
             'optionscode' => 'php
     <p>
        <legend>API Credentials - <a href=\"https://app.oneall.com/applications/\" class=\"external\" target=\"_blank\">Click here to create or view your API Credentials</legend>
-    </p>'],
+    </p>' ],
         'subdomain' => [
             'title' => $lang->setting_oa_social_login_api_subdomain,
             'description' => $lang->setting_oa_social_login_api_subdomain_desc,
@@ -102,7 +102,7 @@ function oa_social_login_get_settings()
             'optionscode' => 'php
     <p>
        <legend>' . $lang->setting_oa_social_login_where_display . '</legend>
-    </p>'],
+    </p>' ],
         'main_page' => [
             'title' => $lang->setting_oa_social_login_main_page_desc,
             'description' => $lang->setting_oa_social_login_main_page,
@@ -157,13 +157,12 @@ function oa_social_login_get_settings()
             'optionscode' => 'text',
             'value' => 'Connect with your social network account'],
 
-
         // Do you want to use Social Link?
         'link_display' => [
             'optionscode' => 'php
             <p>
                 <legend>' . $lang->setting_oa_social_login_link_legend . '</legend>
-            </p>'],
+            </p>' ],
 
         'link_verified_accounts' => [
             'title' => $lang->setting_oa_social_login_link_verified_accounts,
@@ -183,13 +182,12 @@ function oa_social_login_get_settings()
             'optionscode' => 'text',
             'value' => 'Link your social networks accounts to be able to use them to login.'],
 
-
         // Enable uploading avatars from social network ?
         'avatars_display' => [
             'optionscode' => 'php
             <p>
                 <legend>' . $lang->setting_oa_social_login_avatars_display . '</legend>
-            </p>'],
+            </p>' ],
 
         'avatar' => [
             'title' => $lang->setting_oa_social_login_avatar_desc,
@@ -202,7 +200,7 @@ function oa_social_login_get_settings()
             'optionscode' => 'php
             <p>
                 <legend>' . $lang->setting_oa_social_login_redirection_display . '</legend>
-            </p>'],
+            </p>' ],
 
         'redirection' => [
             'title' => $lang->setting_oa_social_login_redirection_desc,
@@ -210,13 +208,12 @@ function oa_social_login_get_settings()
             'optionscode' => 'text',
             'value' => ''],
 
-
         // Choose the social networks to enable on your forum
         'social_network_display' => [
             'optionscode' => 'php
     <p>
        <legend>' . $lang->setting_oa_social_login_social_network_display . '</legend>
-    </p>'],
+    </p>' ],
         'provider_amazon' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_amazon" title="Amazon">Amazon</span>',
             'title' => 'Amazon',
@@ -224,6 +221,10 @@ function oa_social_login_get_settings()
         'provider_blogger' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_blogger" title="Blogger">Blogger</span>',
             'title' => 'Blogger',
+            'optionscode' => 'onoff'],
+        'provider_discord' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_discord" title="Discord">Discord</span>',
+            'title' => 'Discord',
             'optionscode' => 'onoff'],
         'provider_disqus' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_disqus" title="Disqus">Disqus</span>',
@@ -258,6 +259,10 @@ function oa_social_login_get_settings()
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_instagram" title="Instagram">Instagram</span>',
             'title' => 'Instagram',
             'optionscode' => 'onoff'],
+        'provider_line' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_line" title="Line">Line</span>',
+            'title' => 'Line',
+            'optionscode' => 'onoff'],
         'provider_linkedin' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_linkedin" title="LinkedIn">LinkedIn</span>',
             'title' => 'LinkedIn',
@@ -269,6 +274,10 @@ function oa_social_login_get_settings()
         'provider_mailru' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_mailru" title="Mail.ru">Mail.ru</span>',
             'title' => 'Mail.ru',
+            'optionscode' => 'onoff'],
+        'provider_meetup' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_meetup" title="Meetup">Meetup</span>',
+            'title' => 'Meetup',
             'optionscode' => 'onoff'],
         'provider_odnoklassniki' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_odnoklassniki" title="Odnoklassniki">Odnoklassniki</span>',
@@ -282,6 +291,14 @@ function oa_social_login_get_settings()
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_paypal" title="PayPal">PayPal</span>',
             'title' => 'PayPal',
             'optionscode' => 'onoff'],
+        'provider_pinterest' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_pinterest" title="Pinterest">Pinterest</span>',
+            'title' => 'Pinterest',
+            'optionscode' => 'onoff'],
+        'provider_pixelpin' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_pixelpin" title="PixelPin">PixelPin</span>',
+            'title' => 'PixelPin',
+            'optionscode' => 'onoff'],
         'provider_reddit' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_reddit" title="Reddit">Reddit</span>',
             'title' => 'Reddit',
@@ -289,6 +306,10 @@ function oa_social_login_get_settings()
         'provider_skyrock' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_skyrock" title="Skyrock.com">Skyrock.com</span>',
             'title' => 'Skyrock.com',
+            'optionscode' => 'onoff'],
+        'provider_soundcloud' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_soundcloud" title="SoundCloud">SoundCloud</span>',
+            'title' => 'SoundCloud',
             'optionscode' => 'onoff'],
         'provider_stackexchange' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_stackexchange" title="StackExchange">StackExchange</span>',
@@ -315,6 +336,10 @@ function oa_social_login_get_settings()
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_vkontakte" title="VKontakte">VKontakte</span>',
             'title' => 'VKontakte',
             'optionscode' => 'onoff'],
+        'provider_weibo' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_weibo" title="Weibo">Weibo</span>',
+            'title' => 'Weibo',
+            'optionscode' => 'onoff'],
         'provider_windowslive' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_windowslive" title="Windows Live">Windows Live</span>',
             'title' => 'Windows Live',
@@ -322,6 +347,10 @@ function oa_social_login_get_settings()
         'provider_wordpress' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_wordpress" title="WordPress.com">WordPress.com</span>',
             'title' => 'WordPress.com',
+            'optionscode' => 'onoff'],
+        'provider_xing' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_xing" title="Xing">Xing</span>',
+            'title' => 'Xing',
             'optionscode' => 'onoff'],
         'provider_yahoo' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_yahoo" title="Yahoo">Yahoo</span>',
