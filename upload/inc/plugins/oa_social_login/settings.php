@@ -217,151 +217,194 @@ function oa_social_login_get_settings()
         'provider_amazon' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_amazon" title="Amazon">Amazon</span>',
             'title' => 'Amazon',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
+        'provider_battlenet' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_battlenet" title="BattleNet">BattleNet</span>',
+            'title' => 'BattleNet',
+            'optionscode' => 'onoff'
+        ],
         'provider_blogger' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_blogger" title="Blogger">Blogger</span>',
             'title' => 'Blogger',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_discord' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_discord" title="Discord">Discord</span>',
             'title' => 'Discord',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_disqus' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_disqus" title="Disqus">Disqus</span>',
             'title' => 'Disqus',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_draugiem' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_draugiem" title="Draugiem">Draugiem</span>',
             'title' => 'Draugiem',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_dribbble' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_dribbble" title="Dribbble">Dribbble</span>',
             'title' => 'Dribbble',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_facebook' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_facebook" title="Facebook">Facebook</span>',
             'title' => 'Facebook',
             'optionscode' => 'onoff',
-            'value' => '1'],
+            'value' => '1'
+        ],
         'provider_foursquare' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_foursquare" title="Foursquare">Foursquare</span>',
             'title' => 'Foursquare',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_github' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_github" title="Github.com">Github.com</span>',
             'title' => 'Github.com',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_google' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_google" title="Google">Google</span>',
             'title' => 'Google',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_instagram' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_instagram" title="Instagram">Instagram</span>',
             'title' => 'Instagram',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_line' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_line" title="Line">Line</span>',
             'title' => 'Line',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_linkedin' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_linkedin" title="LinkedIn">LinkedIn</span>',
             'title' => 'LinkedIn',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_livejournal' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_livejournal" title="LiveJournal">LiveJournal</span>',
             'title' => 'LiveJournal',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_mailru' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_mailru" title="Mail.ru">Mail.ru</span>',
             'title' => 'Mail.ru',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_meetup' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_meetup" title="Meetup">Meetup</span>',
             'title' => 'Meetup',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_odnoklassniki' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_odnoklassniki" title="Odnoklassniki">Odnoklassniki</span>',
             'title' => 'Odnoklassniki',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_openid' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_openid" title="OpenID">OpenID</span>',
             'title' => 'OpenID',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_paypal' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_paypal" title="PayPal">PayPal</span>',
             'title' => 'PayPal',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_pinterest' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_pinterest" title="Pinterest">Pinterest</span>',
             'title' => 'Pinterest',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_pixelpin' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_pixelpin" title="PixelPin">PixelPin</span>',
             'title' => 'PixelPin',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_reddit' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_reddit" title="Reddit">Reddit</span>',
             'title' => 'Reddit',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_skyrock' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_skyrock" title="Skyrock.com">Skyrock.com</span>',
             'title' => 'Skyrock.com',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_soundcloud' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_soundcloud" title="SoundCloud">SoundCloud</span>',
             'title' => 'SoundCloud',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_stackexchange' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_stackexchange" title="StackExchange">StackExchange</span>',
             'title' => 'StackExchange',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_steam' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_steam" title="Steam">Steam</span>',
             'title' => 'Steam',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
+        'provider_tumblr' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_tumblr" title="Tumblr">Tumblr</span>',
+            'title' => 'Tumblr',
+            'optionscode' => 'onoff'
+        ],
         'provider_twitch' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_twitch" title="Twitch.tv">Twitch.tv</span>',
             'title' => 'Twitch.tv',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_twitter' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_twitter" title="Twitter">Twitter</span>',
             'title' => 'Twitter',
             'optionscode' => 'onoff',
-            'value' => '1'],
+            'value' => '1'
+        ],
         'provider_vimeo' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_vimeo" title="Vimeo">Vimeo</span>',
             'title' => 'Vimeo',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_vkontakte' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_vkontakte" title="VKontakte">VKontakte</span>',
             'title' => 'VKontakte',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_weibo' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_weibo" title="Weibo">Weibo</span>',
             'title' => 'Weibo',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_windowslive' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_windowslive" title="Windows Live">Windows Live</span>',
             'title' => 'Windows Live',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_wordpress' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_wordpress" title="WordPress.com">WordPress.com</span>',
             'title' => 'WordPress.com',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_xing' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_xing" title="Xing">Xing</span>',
             'title' => 'Xing',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_yahoo' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_yahoo" title="Yahoo">Yahoo</span>',
             'title' => 'Yahoo',
-            'optionscode' => 'onoff'],
+            'optionscode' => 'onoff'
+        ],
         'provider_youtube' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_youtube" title="YouTube">YouTube</span>',
             'title' => 'YouTube',
-            'optionscode' => 'onoff'],
-        'provider_battlenet' => [
-            'description' => '<span class="oa_social_login_provider oa_social_login_provider_battlenet" title="BattleNet">BattleNet</span>',
-            'title' => 'BattleNet',
-            'optionscode' => 'onoff']];
+            'optionscode' => 'onoff'
+        ]
+    ];
 }
