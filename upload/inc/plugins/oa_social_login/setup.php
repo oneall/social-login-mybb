@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   	OneAll Social Login
- * @copyright 	Copyright 2011-2017 http://www.oneall.com
- * @license   	GNU/GPL 2 or later
+ * @package       OneAll Social Login
+ * @copyright     Copyright 2011-2017 http://www.oneall.com
+ * @license       GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +35,7 @@ function oa_social_login_info()
         'website' => 'http://www.oneall.com',
         'author' => 'OneAll',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.6',
+        'version' => '2.6.0',
         'compatibility' => '16*,18*'
     ];
 }
@@ -45,11 +45,11 @@ function oa_social_login_info()
  * @param string info to get
  * @return string plugin info
  */
-function oa_social_login_get_info ($what)
+function oa_social_login_get_info($what)
 {
-    $oa_social_login_info = oa_social_login_info ();
+    $oa_social_login_info = oa_social_login_info();
 
-    if (isset ($oa_social_login_info[$what]))
+    if (isset($oa_social_login_info[$what]))
     {
         return $oa_social_login_info[$what];
     }
@@ -152,7 +152,8 @@ function oa_social_login_is_installed()
     $installed_plugins = $cache->read('cached_plugins');
 
     // Check if installed
-    return (( ! empty ($installed_plugins[oa_social_login_get_info('name')])) ? true : false);
+
+    return ((!empty($installed_plugins[oa_social_login_get_info('name')])) ? true : false);
 }
 
 /**
@@ -175,7 +176,7 @@ function oa_social_login_add_to_templates()
     find_replace_templatesets('member_login', '#' . preg_quote('</table>') . '#i', '{$oa_login_member_page}</table>');
 
     // Social Link
-    find_replace_templatesets('usercp_profile', '#' . preg_quote ('{$customtitle}') .'#i', '{$oa_social_link}{$customtitle}');
+    find_replace_templatesets('usercp_profile', '#' . preg_quote('{$customtitle}') . '#i', '{$oa_social_link}{$customtitle}');
 }
 
 /**
@@ -198,7 +199,7 @@ function oa_social_login_cleanup_templates()
     find_replace_templatesets('member_login', '#' . preg_quote('{$oa_login_member_page}') . '#i', '');
 
     // Social Link
-    find_replace_templatesets('usercp_profile', '#' . preg_quote ('{$oa_social_link}') .'#i', '');
+    find_replace_templatesets('usercp_profile', '#' . preg_quote('{$oa_social_link}') . '#i', '');
 }
 
 /**
@@ -277,7 +278,7 @@ function oa_social_login_uninstall()
     $query = $db->simple_select('settings', 'sid', "name LIKE 'oa_social_login_%'");
     while ($sid = $db->fetch_field($query, 'sid'))
     {
-        $db->delete_query('settings', "sid='".intval ($sid) ."'");
+        $db->delete_query('settings', "sid='" . intval($sid) . "'");
     }
 
     // Delete settings group.
@@ -329,7 +330,7 @@ function oa_social_login_add_stylesheet()
     // Read our CSS
     $css_file_name = 'oa_social_login.css';
     $css_file_path = (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . $css_file_name);
-    $css_file_contents =  file_get_contents($css_file_path);
+    $css_file_contents = file_get_contents($css_file_path);
 
     // myBB Main Style, global.css
     $themestylesheets_tid = 1;

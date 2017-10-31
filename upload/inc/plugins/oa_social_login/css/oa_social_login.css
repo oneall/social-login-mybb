@@ -177,6 +177,8 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
     padding: 0;
 }
 
+
+/* Buttons */
 .oa_social_login_provider_vimeo {
     background-position: -2px -1px;
 }
@@ -301,22 +303,6 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
     background-position: -1260px -1px;
 }
 
-.oa_social_login_provider_line {
-    background-position: -1445px -1px;
-}
-
-.oa_social_login_provider_soundcloud {
-    background-position: -1482px -1px;
-}
-
-.oa_social_login_provider_meetup {
-    background-position: -1408px -1px;
-}
-
-.oa_social_login_provider_storage {
-    background-position: -1371px -1px;
-}
-
 .oa_social_login_provider_pinterest {
     background-position: -1297px -1px;
 }
@@ -325,8 +311,24 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
     background-position: -1334px -1px;
 }
 
+.oa_social_login_provider_storage {
+    background-position: -1371px -1px;
+}
+
+.oa_social_login_provider_meetup {
+    background-position: -1408px -1px;
+}
+
 .oa_social_login_provider_xing {
-    background-position: -483px -1px;
+    background-position: -372px -1px;
+}
+
+.oa_social_login_provider_line {
+    background-position: -1445px -1px;
+}
+
+.oa_social_login_provider_soundcloud {
+    background-position: -1482px -1px;
 }
 
 .oa_social_login_provider_discord {
@@ -335,4 +337,8 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
 
 .oa_social_login_provider_weibo {
     background-position: -1556px -1px;
+}
+
+.oa_social_login_provider_tumblr {
+    background-position: -1593px -1px;
 }
