@@ -35,7 +35,7 @@ function oa_social_login_info()
         'website' => 'http://www.oneall.com',
         'author' => 'OneAll',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.7.1',
+        'version' => '2.7.2',
         'compatibility' => '16*,18*'
     ];
 }

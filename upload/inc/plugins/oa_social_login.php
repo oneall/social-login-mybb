@@ -37,6 +37,7 @@ require_once MYBB_ROOT . "inc/plugins/oa_social_login/tools.php";
 // All pages
 $plugins->add_hook('global_start', 'oa_social_login_load_library');
 
+
 // 1.8 has jQuery, not Prototype
 if ($mybb->version_code >= 1700)
 {
@@ -170,6 +171,7 @@ function oa_social_login_load_plugin_hook_error_no_permission()
     }
 }
 
+
 /**
  * Integrate Social Login into templates
  * @return void
@@ -187,26 +189,34 @@ function oa_social_login_load_plugin_hook_any()
         $positions[] = 'main_page';
         $positions[] = 'login_page';
         $positions[] = 'registration_page';
+        $positions[] = 'custom';
 
         // Add
         foreach ($positions as $position)
         {
-            $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
-            $enabled_current = ( ! empty ($mybb->settings['oa_social_login_' . $position]) ? true : false);
-
-            // Display only once per page
-            if (in_array ($position, array ('main_page', 'registration_page')))
+            if ($position == 'custom')
             {
-                if ($enabled_current && ! $enabled_top)
-                {
-                    oa_social_login_load_plugin ($position);
-                }
+                oa_social_login_load_plugin ($position);
             }
             else
             {
-                if ($enabled_current)
+                $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
+                $enabled_current = ( ! empty ($mybb->settings['oa_social_login_' . $position]) ? true : false);
+
+                // Display only once per page
+                if (in_array ($position, array ('main_page', 'registration_page')))
                 {
-                    oa_social_login_load_plugin ($position);
+                    if ($enabled_current && ! $enabled_top)
+                    {
+                        oa_social_login_load_plugin ($position);
+                    }
+                }
+                else
+                {
+                    if ($enabled_current)
+                    {
+                        oa_social_login_load_plugin ($position);
+                    }
                 }
             }
         }
@@ -307,7 +317,7 @@ function oa_social_login_load_library()
  */
 function oa_social_login_load_plugin($position, $return = false)
 {
-    global $mybb, $templates, $theme, $oa_login_main_page, $oa_login_login_page, $oa_login_registration_page, $oa_login_other_page, $oa_login_member_page;
+    global $mybb, $templates, $theme, $oa_login_main_page, $oa_login_custom, $oa_login_login_page, $oa_login_registration_page, $oa_login_other_page, $oa_login_member_page;
 
     // Contents to display
     $contents = '';
