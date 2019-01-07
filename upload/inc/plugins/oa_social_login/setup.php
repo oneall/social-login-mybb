@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       OneAll Social Login
- * @copyright     Copyright 2011-2017 http://www.oneall.com
+ * @copyright     Copyright 2011-Present http://www.oneall.com
  * @license       GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ function oa_social_login_info()
         'website' => 'http://www.oneall.com',
         'author' => 'OneAll',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.7.0',
+        'version' => '2.7.1',
         'compatibility' => '16*,18*'
     ];
 }

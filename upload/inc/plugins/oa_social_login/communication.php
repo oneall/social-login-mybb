@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       OneAll Social Login
- * @copyright     Copyright 2011-2017 http://www.oneall.com
+ * @copyright     Copyright 2011-Present http://www.oneall.com
  * @license       GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
@@ -22,7 +22,7 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
-define('OA_SOCIAL_LOGIN_USER_AGENT', 'SocialLogin/2.7.0 myBB/1.8 (+http://www.oneall.com/)');
+define('OA_SOCIAL_LOGIN_USER_AGENT', 'SocialLogin/2.7.1 myBB/1.8 (+http://www.oneall.com/)');
 
 /**
  * Sends an API request by using the given handler.
