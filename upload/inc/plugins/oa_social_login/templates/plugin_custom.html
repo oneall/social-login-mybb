@@ -1,0 +1,12 @@
+<div class="oneall_social_login_custom" id="{$oneall_social_login_cfg['position']}"></div>
+<!-- OneAll Social Login : http://www.oneall.com //-->
+<script data-cfasync="false" type="text/javascript">
+ // <![CDATA[
+  var _oneall = _oneall || [];
+  _oneall.push(['social_login', 'set_providers', ['{$oneall_social_login_cfg['providers']}']]);
+  _oneall.push(['social_login', 'set_callback_uri', '{$oneall_social_login_cfg['callback_uri']}']);
+  _oneall.push(['social_login', 'set_custom_css_uri', '{$oneall_social_login_cfg['css_uri']}']);
+  _oneall.push(['social_login', 'set_grid_sizes', [99, 99]]);
+  _oneall.push(['social_login', 'do_render_ui', '{$oneall_social_login_cfg['position']}']);
+ // ]]>
+</script>

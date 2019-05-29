@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   	OneAll Social Login
- * @copyright 	Copyright 2011-2017 http://www.oneall.com
+ * @copyright 	Copyright 2011-Present http://www.oneall.com
  * @license   	GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
@@ -36,6 +36,7 @@ require_once MYBB_ROOT . "inc/plugins/oa_social_login/tools.php";
 
 // All pages
 $plugins->add_hook('global_start', 'oa_social_login_load_library');
+
 
 // 1.8 has jQuery, not Prototype
 if ($mybb->version_code >= 1700)
@@ -125,7 +126,7 @@ function oa_social_login_social_link()
         // Make sure we have a user
         if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
         {
-            // Template Varsd
+            // Template Vars.
             global $oneall_social_login_cfg;
             $oneall_social_login_cfg = array(
                 'caption' => $mybb->settings['oa_social_login_link_user_profile_caption'],
@@ -170,6 +171,7 @@ function oa_social_login_load_plugin_hook_error_no_permission()
     }
 }
 
+
 /**
  * Integrate Social Login into templates
  * @return void
@@ -187,26 +189,34 @@ function oa_social_login_load_plugin_hook_any()
         $positions[] = 'main_page';
         $positions[] = 'login_page';
         $positions[] = 'registration_page';
+        $positions[] = 'custom';
 
         // Add
         foreach ($positions as $position)
         {
-            $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
-            $enabled_current = ( ! empty ($mybb->settings['oa_social_login_' . $position]) ? true : false);
-
-            // Display only once per page
-            if (in_array ($position, array ('main_page', 'registration_page')))
+            if ($position == 'custom')
             {
-                if ($enabled_current && ! $enabled_top)
-                {
-                    oa_social_login_load_plugin ($position);
-                }
+                oa_social_login_load_plugin ($position);
             }
             else
             {
-                if ($enabled_current)
+                $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
+                $enabled_current = ( ! empty ($mybb->settings['oa_social_login_' . $position]) ? true : false);
+
+                // Display only once per page
+                if (in_array ($position, array ('main_page', 'registration_page')))
                 {
-                    oa_social_login_load_plugin ($position);
+                    if ($enabled_current && ! $enabled_top)
+                    {
+                        oa_social_login_load_plugin ($position);
+                    }
+                }
+                else
+                {
+                    if ($enabled_current)
+                    {
+                        oa_social_login_load_plugin ($position);
+                    }
                 }
             }
         }
@@ -307,7 +317,7 @@ function oa_social_login_load_library()
  */
 function oa_social_login_load_plugin($position, $return = false)
 {
-    global $mybb, $templates, $theme, $oa_login_main_page, $oa_login_login_page, $oa_login_registration_page, $oa_login_other_page, $oa_login_member_page;
+    global $mybb, $templates, $theme, $oa_login_main_page, $oa_login_custom, $oa_login_login_page, $oa_login_registration_page, $oa_login_other_page, $oa_login_member_page;
 
     // Contents to display
     $contents = '';
@@ -1291,7 +1301,7 @@ function oa_social_login_synchronize_identities($userid, $user_token, $user_iden
  */
 function oa_social_login_callback()
 {
-    global $mybb, $lang, $plugins, $db, $templates;
+    global $mybb, $lang, $plugins, $db, $templates, $cache;
 
     // Callback Handler
     if (isset($_POST) && !empty($_POST['oa_action']) && !empty($_POST['connection_token']))
@@ -1304,6 +1314,9 @@ function oa_social_login_callback()
 
         // Load Language
         $lang->load('oa_social_login');
+
+        // Redirect message.
+        $redirect_message = null;
 
         // OneAll Connection token
         $connection_token = trim($_POST['connection_token']);
@@ -1515,6 +1528,12 @@ function oa_social_login_callback()
 	                                }
 	                            }
 
+	                            // Read the profile fields.
+	                            $profile_fields = $cache->read('profilefields');
+
+	                            // Reset so that they don't trigger errors.
+	                            $cache->update('profilefields', array());
+
 	                            // Set the data of the user in the datahandler.
 	                            $user_data_handler = new UserDataHandler('insert');
 	                            $user_data_handler->set_data($mybb_user_data);
@@ -1522,8 +1541,11 @@ function oa_social_login_callback()
 	                            // Validate the user data and check for errors
 	                            if (!$user_data_handler->validate_user())
 	                            {
-	                            	// Read errors
-	                                $errors = $user_data_handler->get_friendly_errors();
+	                                // Revert back to old.
+	                                $cache->update('profilefields', $profile_fields);
+
+	                                // Read errors.
+	                                $redirect_message = implode (', ',$user_data_handler->get_friendly_errors());
 
 	                                // Log error
 	                                oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_user, $connection_token, implode(",", $errors)), __FILE__, __LINE__);
@@ -1531,6 +1553,9 @@ function oa_social_login_callback()
 	                            // Valid user data, create user
 	                            else
 	                            {
+	                                // Revert back to old.
+	                                $cache->update('profilefields', $profile_fields);
+
 	                                // Other actions
 	                                $plugins->run_hooks('member_do_register_start');
 
@@ -1586,8 +1611,14 @@ function oa_social_login_callback()
         	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
         }
 
-        // Display error
-        oa_social_login_redirect(true, $lang->oa_social_login_error);
+        // Error message.
+        if (empty ($redirect_message))
+        {
+            $redirect_message =  $lang->oa_social_login_error;
+        }
+
+        // Redirect to error page.
+        oa_social_login_redirect(true, $redirect_message);
     }
 }
 
