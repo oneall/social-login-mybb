@@ -300,6 +300,11 @@ function oa_social_login_get_settings()
             'title' => 'Meetup',
             'optionscode' => 'onoff'
         ],
+        'provider_mixer' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_mixer" title="Mixer">Mixer</span>',
+            'title' => 'Mixer',
+            'optionscode' => 'onoff'
+        ],
         'provider_odnoklassniki' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_odnoklassniki" title="Odnoklassniki">Odnoklassniki</span>',
             'title' => 'Odnoklassniki',

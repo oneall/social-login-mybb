@@ -1,0 +1,370 @@
+/* Base */
+* {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+}
+
+.clear {
+	clear: both;
+}
+
+.plugin {
+	margin: 0;
+	padding: 0 0 20px 0;
+	background-color: transparent;
+	font-size: 12px;
+	color: #333;
+	font-family: Tahoma, Kalimati, Verdana, "Bitstream Vera Sans", "DejaVu Sans", Geneva, Arial, Helvetica, Sans-serif;
+}
+
+.plugin #content {
+	overflow: hidden;
+}
+
+.plugin #providers {
+	float: left;
+	position: relative;
+}
+
+.plugin #providers .providers_group {
+	float: left;
+}
+
+.plugin #providers .providers_group.hidden {
+	display: none;
+}
+
+.plugin #providers .providers_group .providers_block {
+	overflow: hidden;
+	clear: both;
+	padding: 0 20px;
+}
+
+.plugin #providers.providers_unpaginated .providers_group .providers_block {
+	padding: 0 !important;
+}
+
+.plugin #providers .providers_group .providers_block .providers_row {
+	clear: both;
+}
+
+.plugin #providers .providers_group .scroll {
+	height: 100%;
+	min-height: 100%;
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	bottom: 0;
+	top: 0;
+}
+
+.plugin #ie #providers .providers_group .scroll {
+	top: 30% !important;
+}
+
+.plugin #providers .providers_group .scroll.scroll_left {
+	left: 0;
+}
+
+.plugin #providers .providers_group .scroll.scroll_right {
+	right: 0;
+}
+
+.plugin #providers .providers_group .scroll div {
+	background: url("/img/api/themes/assets/arrows_lr.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0.04);
+	border-radius: 5px;
+	height: 50%;
+	min-height: 40px;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+}
+
+.plugin #ie #providers .providers_group .scroll div {
+	margin-top: 0 !important;
+}
+
+.plugin #providers .providers_group .scroll.scroll_right div {
+	background-position: -50px 50%;
+}
+
+.plugin #providers .providers_group .scroll.scroll_right:hover div {
+	background-position: -10px 50%;
+}
+
+.plugin #providers .providers_group .scroll.scroll_left div {
+	background-position: -130px 50%;
+}
+
+.plugin #providers .providers_group .scroll.scroll_left:hover div {
+	background-position: -90px 50%;
+}
+
+.plugin #providers .provider {
+	float: left;
+	outline: 0 none;
+}
+
+.plugin #providers .provider .button {
+	cursor: pointer;
+	display: block;
+	margin: 0 auto;
+	position: relative;
+	z-index: 9998;
+	outline: 0 none;
+}
+
+.plugin #providers .provider .button .tick {
+	display: inline-block;
+	position: absolute;
+	height: 16px;
+	width: 16px;
+	z-index: 9999;
+}
+
+.plugin #providers .provider .name {
+	color: #555;
+	text-align: center;
+	font-size: 11px;
+	line-height: 14px;
+	margin: 1px 0 2px;
+}
+
+.plugin #providers .provider_linked .button .tick {
+	background: url("/img/api/themes/assets/tick.png") no-repeat 0 0 transparent;
+}
+
+.plugin #providers .provider_linked .name {
+	font-weight: bold;
+}
+
+.plugin .footer {
+	margin-top: 5px;
+	font-size: 10px;
+	position: fixed;
+	left: 5px;
+	right: 0;
+	bottom: 0;
+	line-height: 16px;
+}
+
+.plugin .footer #message {
+	display: none;
+	cursor: pointer;
+}
+
+.plugin .footer #message.notice {
+	color: #000;
+}
+
+.plugin .footer #message.error {
+	color: #ff0000;
+}
+
+.plugin .footer #branding {
+	color: #666;
+}
+
+.plugin .footer #branding a {
+	color: #555;
+	text-decoration: none;
+}
+
+.plugin .footer #branding a span.plugin_title {
+	color: #3366CC;
+}
+
+/* Custom */
+.plugin #providers .provider {
+	padding: 0 3px 6px 3px;
+}
+
+.plugin #providers .provider .button .tick {
+	right: -7px;
+}
+
+.plugin #providers .provider .button {
+	width: 35px;
+	height: 35px ;
+	background-image: url("/img/api/themes/iconsets/beveled_w35_h35_c_v1.png");
+	background-repeat: no-repeat;
+}
+
+.plugin #providers .provider .name {
+	margin: 3px 0 3px;
+	width: 62px;
+}
+
+/* Buttons */
+.plugin #providers .provider #button_vimeo {
+	background-position: -2px -1px;
+}
+
+.plugin #providers .provider #button_blogger {
+	background-position: -39px -1px;
+}
+
+.plugin #providers .provider #button_facebook {
+	background-position: -76px -1px;
+}
+
+.plugin #providers .provider #button_foursquare {
+	background-position: -113px -1px;
+}
+
+.plugin #providers .provider #button_reddit {
+	background-position: -187px -1px;
+}
+
+.plugin #providers .provider #button_linkedin {
+	background-position: -224px -1px;
+}
+
+.plugin #providers .provider #button_windowslive {
+	background-position: -261px -1px;
+}
+
+.plugin #providers .provider #button_livejournal {
+	background-position: -298px -1px;
+}
+
+.plugin #providers .provider #button_myspace {
+	background-position: -372px -1px;
+}
+
+.plugin #providers .provider #button_openid {
+	background-position: -409px -1px;
+}
+
+.plugin #providers .provider #button_draugiem {
+	background-position: -446px -1px;
+}
+
+.plugin #providers .provider #button_twitter {
+	background-position: -520px -1px;
+}
+
+.plugin #providers .provider #button_vkontakte {
+	background-position: -631px -1px;
+}
+
+.plugin #providers .provider #button_wordpress {
+	background-position: -668px -1px;
+}
+
+.plugin #providers .provider #button_yahoo {
+	background-position: -705px -1px;
+}
+
+.plugin #providers .provider #button_paypal {
+	background-position: -742px -1px;
+}
+
+.plugin #providers .provider #button_stackexchange {
+	background-position: -779px -1px;
+}
+
+.plugin #providers .provider #button_steam {
+	background-position: -816px -1px;
+}
+
+.plugin #providers .provider #button_mailru {
+	background-position: -853px -1px;
+}
+
+.plugin #providers .provider #button_skyrock {
+	background-position: -890px -1px;
+}
+
+.plugin #providers .provider #button_github {
+	background-position: -927px -1px;
+}
+
+.plugin #providers .provider #button_disqus {
+	background-position: -964px -1px;
+}
+
+.plugin #providers .provider #button_youtube {
+	background-position: -1001px -1px;
+}
+
+.plugin #providers .provider #button_odnoklassniki {
+	background-position: -1038px -1px;
+}
+
+.plugin #providers .provider #button_deviantart {
+	background-position: -1075px -1px;
+}
+
+.plugin #providers .provider #button_twitch {
+	background-position: -1112px -1px;
+}
+
+.plugin #providers .provider #button_amazon {
+	background-position: -1149px -1px;
+}
+
+.plugin #providers .provider #button_instagram {
+	background-position: -1186px -1px;
+}
+
+.plugin #providers .provider #button_battlenet {
+	background-position: -1223px -1px;
+}
+
+.plugin #providers .provider #button_dribbble {
+	background-position: -1260px -1px;
+}
+
+.plugin #providers .provider #button_pinterest {
+	background-position: -1297px -1px;
+}
+
+.plugin #providers .provider #button_pixelpin {
+	background-position: -1334px -1px;
+}
+
+.plugin #providers .provider #button_storage {
+	background-position: -1371px -1px;
+}
+
+.plugin #providers .provider #button_meetup {
+	background-position: -1408px -1px;
+}
+
+.plugin #providers .provider #button_xing {
+    background-position: -372px -1px;
+}
+
+.plugin #providers .provider #button_line {
+	background-position: -1445px -1px;
+}
+
+.plugin #providers .provider #button_soundcloud {
+	background-position: -1482px -1px;
+}
+
+.plugin #providers .provider #button_discord {
+	background-position: -1519px -1px;
+}
+
+.plugin #providers .provider #button_weibo {
+	background-position: -1556px -1px;
+}
+
+.plugin #providers .provider #button_tumblr {
+	background-position: -1593px -1px;
+}
+
+.plugin #providers .provider #button_mixer {
+	background-position: -1667px -1px;
+}
+
+.plugin #providers .provider #button_google {
+	background-position: -1704px -1px;
+}
+

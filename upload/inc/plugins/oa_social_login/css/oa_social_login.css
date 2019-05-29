@@ -342,3 +342,11 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
 .oa_social_login_provider_tumblr {
     background-position: -1593px -1px;
 }
+
+.oa_social_login_provider_mixer {
+    background-position: -1667px -1px;
+}
+
+.oa_social_login_provider_google {
+    background-position: -1704px -1px;
+}

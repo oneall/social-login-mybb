@@ -31,11 +31,11 @@ function oa_social_login_info()
 {
     return [
         'name' => 'OneAll Social Login',
-        'description' => 'Allow your visitors to comment, login and register with 30+ Social Networks like Twitter, Facebook, LinkedIn, Instagram, Вконтакте, Google or Yahoo.',
+        'description' => 'Allow your visitors to comment, login and register with 40+ Social Networks like Twitter, Facebook, LinkedIn, Instagram, Вконтакте, Google or Yahoo.',
         'website' => 'http://www.oneall.com',
         'author' => 'OneAll',
         'authorsite' => 'http://www.oneall.com',
-        'version' => '2.7.0',
+        'version' => '2.8.0',
         'compatibility' => '16*,18*'
     ];
 }
