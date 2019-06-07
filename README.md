@@ -6,7 +6,7 @@ new users and provides permission-based social data retrieved from the social ne
 
 
 ## Installation guide
-http://docs.oneall.com/plugins/guide/social-login-mybb/
+https://docs.oneall.com/plugins/guide/social-login-mybb/
 
 ## Official myBB plugin
 https://community.mybb.com/mods.php?action=view&pid=981
@@ -54,7 +54,7 @@ https://community.mybb.com/mods.php?action=view&pid=981
 * YouTube
 
 ## About Us
-Social Login is maintained by [OneAll](http://www.oneall.com/). OneAll, a technology company offering a set of 
+Social Login is maintained by [OneAll](https://www.oneall.com). OneAll, a technology company offering a set of 
 web-delivered tools and services for establishing and optimizing a site's connection with social networks.
 
 ## License
