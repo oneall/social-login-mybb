@@ -1,8 +1,8 @@
 <?php
 /**
- * @package   	OneAll Social Login
- * @copyright 	Copyright 2011-Present http://www.oneall.com
- * @license   	GNU/GPL 2 or later
+ * @package       OneAll Social Login
+ * @copyright     Copyright 2011-Present http://www.oneall.com
+ * @license       GNU/GPL 2 or later
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +36,6 @@ require_once MYBB_ROOT . "inc/plugins/oa_social_login/tools.php";
 
 // All pages
 $plugins->add_hook('global_start', 'oa_social_login_load_library');
-
 
 // 1.8 has jQuery, not Prototype
 if ($mybb->version_code >= 1700)
@@ -83,7 +82,7 @@ if (defined('IN_ADMINCP'))
  */
 function oa_social_login_social_link()
 {
-     global $mybb, $templates, $theme, $oa_social_link;
+    global $mybb, $templates, $theme, $oa_social_link;
 
     // Contents to display
     $contents = '';
@@ -95,7 +94,7 @@ function oa_social_login_social_link()
     $providers = array();
 
     // Make sure it's enabled
-    if ( ! empty ($mybb->settings['oa_social_login_link_user_profile']))
+    if (!empty($mybb->settings['oa_social_login_link_user_profile']))
     {
         foreach ($mybb->settings as $setting_name => $value)
         {
@@ -121,7 +120,7 @@ function oa_social_login_social_link()
     }
 
     // If it's not enabled, do not display it
-    if ($is_setup && count ($providers) > 0)
+    if ($is_setup && count($providers) > 0)
     {
         // Make sure we have a user
         if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
@@ -153,24 +152,23 @@ function oa_social_login_load_plugin_hook_error_no_permission()
     global $mybb, $templates;
 
     // User is not logged in
-    if (empty ($mybb->user['uid']))
+    if (empty($mybb->user['uid']))
     {
-        $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
-        $enabled_current = ( ! empty ($mybb->settings['oa_social_login_member_page']) ? true : false);
+        $enabled_top = (!empty($mybb->settings['oa_social_login_other_page']) ? true : false);
+        $enabled_current = (!empty($mybb->settings['oa_social_login_member_page']) ? true : false);
 
         // Is Social Login enabled on this page?
-        if ($enabled_current && ! $enabled_top)
+        if ($enabled_current && !$enabled_top)
         {
             // We can't use variables in this template, so we need to change it's code directly
-            if(!$templates->cache['error_nopermission'])
+            if (!$templates->cache['error_nopermission'])
             {
                 $templates->cache('error_nopermission');
             }
-            $templates->cache['error_nopermission'] = str_replace('<!-- oa_login_member_page -->', oa_social_login_load_plugin ('member_page', true), $templates->cache['error_nopermission']);
+            $templates->cache['error_nopermission'] = str_replace('<!-- oa_login_member_page -->', oa_social_login_load_plugin('member_page', true), $templates->cache['error_nopermission']);
         }
     }
 }
-
 
 /**
  * Integrate Social Login into templates
@@ -181,7 +179,7 @@ function oa_social_login_load_plugin_hook_any()
     global $mybb;
 
     // User is not logged in
-    if (empty ($mybb->user['uid']))
+    if (empty($mybb->user['uid']))
     {
         // Available positions
         $positions = array();
@@ -196,26 +194,26 @@ function oa_social_login_load_plugin_hook_any()
         {
             if ($position == 'custom')
             {
-                oa_social_login_load_plugin ($position);
+                oa_social_login_load_plugin($position);
             }
             else
             {
-                $enabled_top = ( ! empty ($mybb->settings['oa_social_login_other_page']) ? true : false);
-                $enabled_current = ( ! empty ($mybb->settings['oa_social_login_' . $position]) ? true : false);
+                $enabled_top = (!empty($mybb->settings['oa_social_login_other_page']) ? true : false);
+                $enabled_current = (!empty($mybb->settings['oa_social_login_' . $position]) ? true : false);
 
                 // Display only once per page
-                if (in_array ($position, array ('main_page', 'registration_page')))
+                if (in_array($position, array('main_page', 'registration_page')))
                 {
-                    if ($enabled_current && ! $enabled_top)
+                    if ($enabled_current && !$enabled_top)
                     {
-                        oa_social_login_load_plugin ($position);
+                        oa_social_login_load_plugin($position);
                     }
                 }
                 else
                 {
                     if ($enabled_current)
                     {
-                        oa_social_login_load_plugin ($position);
+                        oa_social_login_load_plugin($position);
                     }
                 }
             }
@@ -236,23 +234,23 @@ function oa_social_login_admin_header()
     global $mybb, $page;
 
     // Are we in our settings?
-    if ( ! empty ($mybb->input['action']) && $mybb->input['action'] == "change")
+    if (!empty($mybb->input['action']) && $mybb->input['action'] == "change")
     {
-        if ( ! empty ($mybb->input['gid']) && $mybb->input['gid'] == oa_social_login_settings_gid ())
+        if (!empty($mybb->input['gid']) && $mybb->input['gid'] == oa_social_login_settings_gid())
         {
-        	// Compute plugin folder
-        	$plugin_url = rtrim ($mybb->settings['bburl'],'/ '). '/inc/plugins/oa_social_login/';
+            // Compute plugin folder
+            $plugin_url = rtrim($mybb->settings['bburl'], '/ ') . '/inc/plugins/oa_social_login/';
 
             // Add CSS Stylesheet
-            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="' . $plugin_url .'css/oa_social_login.css" />';
+            $page->extra_header .= '<link rel="stylesheet" type="text/css" href="' . $plugin_url . 'css/oa_social_login.css" />';
 
             // Add JavaScript
-            $page->extra_header .= '<script src="' . $plugin_url .'js/admin.js"></script>';
+            $page->extra_header .= '<script src="' . $plugin_url . 'js/admin.js"></script>';
 
             // MyBB < 1.8 has no jQuery
             if ($mybb->version_code < 1800)
             {
-                $page->extra_header .= '<script src="' . $plugin_url .'js/jquery.min.js"></script>';
+                $page->extra_header .= '<script src="' . $plugin_url . 'js/jquery.min.js"></script>';
             }
         }
     }
@@ -270,12 +268,12 @@ function oa_social_login_admin_footer()
     $lang->load('oa_social_login');
 
     // Are we in our settings?
-    if ( ! empty ($mybb->input["action"]) && $mybb->input["action"] == "change")
+    if (!empty($mybb->input["action"]) && $mybb->input["action"] == "change")
     {
-        if ( ! empty ($mybb->input["gid"]) && $mybb->input["gid"] == oa_social_login_settings_gid ())
+        if (!empty($mybb->input["gid"]) && $mybb->input["gid"] == oa_social_login_settings_gid())
         {
             eval("\$oa_social_login_admin_footer  = \"" . $templates->get('oasociallogin_plugin_admin_js') . "\";");
-            echo $oa_social_login_admin_footer ;
+            echo $oa_social_login_admin_footer;
         }
     }
 }
@@ -350,7 +348,7 @@ function oa_social_login_load_plugin($position, $return = false)
     }
 
     // If it's not enabled, do not display it
-    if ($is_setup && ! empty ($position))
+    if ($is_setup && !empty($position))
     {
         // Template Vars
         global $oneall_social_login_cfg;
@@ -367,7 +365,8 @@ function oa_social_login_load_plugin($position, $return = false)
         // Return value
         if ($return)
         {
-            return ${'oa_login_' . $position};
+            return ${
+                'oa_login_' . $position};
         }
     }
 }
@@ -381,9 +380,10 @@ function oa_social_login_generate_password()
     global $mybb;
 
     // Length?
-    $password_length =  ( ! empty ($mybb->settings['maxpasswordlength']) ? max (8, $mybb->settings['maxpasswordlength']) : 8);
+    $password_length = (!empty($mybb->settings['maxpasswordlength']) ? max(8, $mybb->settings['maxpasswordlength']) : 8);
 
     // Generate
+
     return random_str($password_length, $mybb->settings['requirecomplexpasswords']);
 }
 
@@ -425,22 +425,23 @@ function oa_social_login_settings_gid()
     $gid = $db->fetch_field($query, "gid");
 
     // Done
-    return (! is_numeric ($gid) ? null : $gid);
+
+    return (!is_numeric($gid) ? null : $gid);
 }
 
 /**
  * Hook called when updating the settings in the administration area
  * @return void
  */
-function oa_social_login_settings_change ()
+function oa_social_login_settings_change()
 {
     global $mybb;
 
     // Make sure we are saving our settings
-    if (isset ($mybb->input['upsetting']) && is_array ($mybb->input['upsetting']))
+    if (isset($mybb->input['upsetting']) && is_array($mybb->input['upsetting']))
     {
         // Update the subdomain
-        if (! empty ($mybb->input['upsetting']['oa_social_login_subdomain']))
+        if (!empty($mybb->input['upsetting']['oa_social_login_subdomain']))
         {
             // The full domain has been entered.
             if (preg_match("/([a-z0-9\-]+)\.api\.oneall\.com/i", $mybb->input['upsetting']['oa_social_login_subdomain'], $matches))
@@ -451,15 +452,15 @@ function oa_social_login_settings_change ()
         }
 
         // Update the Public Key
-        if (! empty ($mybb->input['upsetting']['oa_social_login_public_key']))
+        if (!empty($mybb->input['upsetting']['oa_social_login_public_key']))
         {
-            $mybb->input['upsetting']['oa_social_login_public_key'] = trim ($mybb->input['upsetting']['oa_social_login_public_key']);
+            $mybb->input['upsetting']['oa_social_login_public_key'] = trim($mybb->input['upsetting']['oa_social_login_public_key']);
         }
 
         // Update the Private Key
-        if (! empty ($mybb->input['upsetting']['oa_social_login_private_key']))
+        if (!empty($mybb->input['upsetting']['oa_social_login_private_key']))
         {
-            $mybb->input['upsetting']['oa_social_login_private_key'] = trim ($mybb->input['upsetting']['oa_social_login_private_key']);
+            $mybb->input['upsetting']['oa_social_login_private_key'] = trim($mybb->input['upsetting']['oa_social_login_private_key']);
         }
     }
 }
@@ -468,7 +469,7 @@ function oa_social_login_settings_change ()
  * Hook for Autodetect/Verify Ajax in the administration area
  * @return void
  */
-function oa_social_login_admin_ajax ()
+function oa_social_login_admin_ajax()
 {
     global $mybb;
 
@@ -488,7 +489,6 @@ function oa_social_login_admin_ajax ()
     }
 }
 
-
 /**
  * Autodetect API Connection Handler
  * @return string result test
@@ -498,9 +498,9 @@ function oa_social_login_autodetect_api_connection_handler()
     global $mybb, $lang;
 
     // Make sure the user has the right to do this
-    if ( ! $mybb->usergroup['cancp'])
+    if (!$mybb->usergroup['cancp'])
     {
-        die ('error|no_permission_to_access');
+        die('error|no_permission_to_access');
     }
 
     // Load language
@@ -512,17 +512,17 @@ function oa_social_login_autodetect_api_connection_handler()
         // Check CURL HTTPS - Port 443
         if (oa_social_login_check_curl(true))
         {
-            die ('success|curl_443|'.$lang->oa_social_login_api_curl_443);
+            die('success|curl_443|' . $lang->oa_social_login_api_curl_443);
         }
 
         // Check CURL HTTP - Port 80
         if (oa_social_login_check_curl(false))
         {
-            die ('success|curl_80'.$lang->oa_social_login_api_curl_80);
+            die('success|curl_80' . $lang->oa_social_login_api_curl_80);
         }
 
         // CURL ok, but ports blocked
-        die ('error|curl_ports_blocked|'.$lang->oa_social_login_api_curl_blocked);
+        die('error|curl_ports_blocked|' . $lang->oa_social_login_api_curl_blocked);
     }
 
     // Check if FSOCKOPEN is available
@@ -531,21 +531,21 @@ function oa_social_login_autodetect_api_connection_handler()
         // Check FSOCKOPEN HTTPS - Port 443
         if (check_fsockopen(true))
         {
-            die ('success|fsockopen_443|'.$lang->oa_social_login_api_fsockopen_443);
+            die('success|fsockopen_443|' . $lang->oa_social_login_api_fsockopen_443);
         }
 
         // Check FSOCKOPEN HTTP - Port 80
         if (check_fsockopen(false))
         {
-            die ('success|fsockopen_80|'.$lang->oa_social_login_api_fsockopen_80);
+            die('success|fsockopen_80|' . $lang->oa_social_login_api_fsockopen_80);
         }
 
         // FSOCKOPEN ok, but ports blocked
-        die ('success|fsockopen_ports_blocked|'.$lang->oa_social_login_api_fsockopen_blocked);
+        die('success|fsockopen_ports_blocked|' . $lang->oa_social_login_api_fsockopen_blocked);
     }
 
     // No working handler found
-    die('error|no_connection|'.$lang->oa_social_login_api_error);
+    die('error|no_connection|' . $lang->oa_social_login_api_error);
 }
 
 /**
@@ -557,9 +557,9 @@ function oa_social_login_admin_ajax_verify_api_settings()
     global $mybb, $lang;
 
     // Make sure the user has the right to do this
-    if ( ! $mybb->usergroup['cancp'])
+    if (!$mybb->usergroup['cancp'])
     {
-        die ('error|no_permission_to_access');
+        die('error|no_permission_to_access');
     }
 
     // Load language
@@ -578,7 +578,7 @@ function oa_social_login_admin_ajax_verify_api_settings()
     // Check if all fields have been filled out.
     if (strlen($api_subdomain) == 0 || strlen($api_key) == 0 || strlen($api_secret) == 0)
     {
-        die ('error|'.$lang->oa_social_login_api_fill_credentials );
+        die('error|' . $lang->oa_social_login_api_fill_credentials);
     }
 
     // Check the handler
@@ -590,7 +590,7 @@ function oa_social_login_admin_ajax_verify_api_settings()
     {
         if (!check_fsockopen($api_connection_use_https))
         {
-            die ('error|' . $lang->oa_social_login_api_error_use_auto);
+            die('error|' . $lang->oa_social_login_api_error_use_auto);
         }
     }
     // CURL
@@ -598,7 +598,7 @@ function oa_social_login_admin_ajax_verify_api_settings()
     {
         if (!oa_social_login_check_curl($api_connection_use_https))
         {
-            die ('error|' . $lang->oa_social_login_api_error_use_auto);
+            die('error|' . $lang->oa_social_login_api_error_use_auto);
         }
     }
 
@@ -611,7 +611,7 @@ function oa_social_login_admin_ajax_verify_api_settings()
     // Check format of the subdomain.
     if (!preg_match("/^[a-z0-9\-]+$/i", $api_subdomain))
     {
-        die ('error|' . $lang->oa_social_login_api_subdomain_not_found);
+        die('error|' . $lang->oa_social_login_api_subdomain_not_found);
     }
 
     // Construct full API Domain.
@@ -633,20 +633,20 @@ function oa_social_login_admin_ajax_verify_api_settings()
         {
             // Connection successfull.
             case 200:
-                die ('success|' . $lang->oa_social_login_api_connection_ok);
+                die('success|' . $lang->oa_social_login_api_connection_ok);
 
             // Authentication Error.
             case 401:
-                die ('error|' . $lang->oa_social_login_api_credentials_wrong);
+                die('error|' . $lang->oa_social_login_api_credentials_wrong);
 
             // Wrong Subdomain.
             case 404:
-                die ('error|' . $lang->oa_social_login_api_subdomain_not_found);
+                die('error|' . $lang->oa_social_login_api_subdomain_not_found);
         }
     }
 
     // Other error.
-    die ('error|' . $lang->oa_social_login_api_check_com);
+    die('error|' . $lang->oa_social_login_api_check_com);
 }
 
 /**
@@ -662,6 +662,7 @@ function oa_social_login_get_subdomain()
     $data = $db->fetch_array($query);
 
     // Done
+
     return ((is_array($data) && !empty($data['value'])) ? $data['value'] : null);
 }
 
@@ -679,9 +680,9 @@ function oa_social_login_get_user_token_by_userid($uid)
     $data = $db->fetch_array($query);
 
     // Done
+
     return ((is_array($data) && !empty($data['user_token'])) ? $data['user_token'] : null);
 }
-
 
 /**
  * Return User id from his token
@@ -708,7 +709,7 @@ function oa_social_login_get_userid_by_user_token($user_token, $check_orphan = t
             $query = $db->simple_select("users", "COUNT(*) AS tot", "uid='" . intval($data['uid']) . "'", array('limit' => 1));
             if ($db->fetch_field($query, 'tot') != 1)
             {
-                oa_social_login_remove_tokens_for_uid ($data['uid']);
+                oa_social_login_remove_tokens_for_uid($data['uid']);
             }
             // Valid user
             else
@@ -723,6 +724,7 @@ function oa_social_login_get_userid_by_user_token($user_token, $check_orphan = t
     }
 
     // Done
+
     return $userid;
 }
 
@@ -740,6 +742,7 @@ function oa_social_login_get_userid_for_email($email)
     $data = $db->fetch_array($query);
 
     // Done
+
     return ((is_array($data) && !empty($data['uid'])) ? $data['uid'] : null);
 }
 
@@ -767,22 +770,23 @@ function oa_social_login_remove_tokens_for_uid($uid)
  * Invert CamelCase -> camel_case
  * @param string $input CamelCase String
  */
-function oa_social_login_undo_camel_case ($input)
+function oa_social_login_undo_camel_case($input)
 {
-    preg_match_all ('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-    $ret = $matches [0];
+    preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+    $ret = $matches[0];
     foreach ($ret as &$match)
     {
-        $match = ($match == strtoupper ($match) ? strtolower ($match) : lcfirst ($match));
+        $match = ($match == strtoupper($match) ? strtolower($match) : lcfirst($match));
     }
-    return implode ('_', $ret);
+
+    return implode('_', $ret);
 }
 
 /**
  * Extracts the social network data from a result-set returned by the OneAll API.
  * @param  object $data Data received from the OneAll API
  */
-function oa_social_login_extract_social_network_profile ($data)
+function oa_social_login_extract_social_network_profile($data)
 {
     // Check API result.
     if (is_object($data) && property_exists($data, 'http_code') && $data->http_code == 200 && property_exists($data, 'http_data'))
@@ -892,7 +896,7 @@ function oa_social_login_extract_social_network_profile ($data)
                     }
 
                     // myBB does not like spaces here
-                    $data['user_login'] = str_replace(' ', '', trim($data['user_login']));
+                    $data['user_login'] = preg_replace('/[&\/ ,\'\"\\\]+/', ' ', trim($data['user_login']));
 
                     // Website/Homepage.
                     $data['user_website'] = '';
@@ -1197,9 +1201,11 @@ function oa_social_login_extract_social_network_profile ($data)
                     }
                 }
             }
+
             return $data;
         }
     }
+
     return false;
 }
 
@@ -1288,10 +1294,12 @@ function oa_social_login_synchronize_identities($userid, $user_token, $user_iden
         }
 
         // Finished
+
         return true;
     }
 
     // An error occured.
+
     return false;
 }
 
@@ -1347,274 +1355,270 @@ function oa_social_login_callback()
             // Check result
             if (is_object($result) && property_exists($result, 'http_code'))
             {
-            	if ($result->http_code == 200)
-            	{
-	                // Extract data
-	                if (($user_data = oa_social_login_extract_social_network_profile($result)) !== false)
-	                {
-	                    // Get user id by user_token
-	                    $userid = oa_social_login_get_userid_by_user_token($user_data['user_token']);
+                if ($result->http_code == 200)
+                {
+                    // Extract data
+                    if (($user_data = oa_social_login_extract_social_network_profile($result)) !== false)
+                    {
+                        // Get user id by user_token
+                        $userid = oa_social_login_get_userid_by_user_token($user_data['user_token']);
 
-	                    // Social Link
-	                    if ($action == 'social_link')
-	                    {
-	                        // Make sure we have a user
-	                        if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
-	                        {
-	                            // Logged in user
-	                            $userid_current = $mybb->user['uid'];
+                        // Social Link
+                        if ($action == 'social_link')
+                        {
+                            // Make sure we have a user
+                            if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
+                            {
+                                // Logged in user
+                                $userid_current = $mybb->user['uid'];
 
-	                            // Synchronize?
-	                            $synchronize_identities = true;
+                                // Synchronize?
+                                $synchronize_identities = true;
 
-	                            // There is already a userid for this user_token
-	                            if (!empty($userid))
-	                            {
-	                                // The existing user_id does not match the logged in user
-	                                if ($userid != $userid_current)
-	                                {
-	                                    // Show an error to the user.
-	                                    // TODO: ERROR
+                                // There is already a userid for this user_token
+                                if (!empty($userid))
+                                {
+                                    // The existing user_id does not match the logged in user
+                                    if ($userid != $userid_current)
+                                    {
+                                        // Show an error to the user.
+                                        // TODO: ERROR
 
-	                                    // Do not update the tokens.
-	                                    $synchronize_identities = false;
-	                                }
-	                            }
+                                        // Do not update the tokens.
+                                        $synchronize_identities = false;
+                                    }
+                                }
 
-	                            // Synchronize
-	                            if ($synchronize_identities)
-	                            {
-	                                oa_social_login_synchronize_identities($userid_current, $user_data['user_token'], $user_data['user_identites']);
-	                            }
-	                        }
-	                    }
-	                    // Social Login
-	                    else
-	                    {
-	                        // No user for this user_token found
-	                        if (!is_numeric($userid))
-	                        {
-	                            // Automatic Link enabled?
-	                            if (!empty($mybb->settings['oa_social_login_link_verified_accounts']))
-	                            {
-	                                // Only if email is verified
-	                                if (!empty($user_data['user_email']) && $user_data['user_email_is_verified'])
-	                                {
-	                                    // Read existing user
-	                                    $userid_tmp = oa_social_login_get_userid_for_email($user_data['user_email']);
+                                // Synchronize
+                                if ($synchronize_identities)
+                                {
+                                    oa_social_login_synchronize_identities($userid_current, $user_data['user_token'], $user_data['user_identites']);
+                                }
+                            }
+                        }
+                        // Social Login
+                        else
+                        {
+                            // No user for this user_token found
+                            if (!is_numeric($userid))
+                            {
+                                // Automatic Link enabled?
+                                if (!empty($mybb->settings['oa_social_login_link_verified_accounts']))
+                                {
+                                    // Only if email is verified
+                                    if (!empty($user_data['user_email']) && $user_data['user_email_is_verified'])
+                                    {
+                                        // Read existing user
+                                        $userid_tmp = oa_social_login_get_userid_for_email($user_data['user_email']);
 
-	                                    // We have found a user id for this email
-	                                    if (!empty($userid_tmp))
-	                                    {
-	                                        // We can login the user
-	                                        $userid = $userid_tmp;
+                                        // We have found a user id for this email
+                                        if (!empty($userid_tmp))
+                                        {
+                                            // We can login the user
+                                            $userid = $userid_tmp;
 
-	                                        // Does the user already got a user token ?
-	                                        $user_token_linked = oa_social_login_get_user_token_by_userid ($userid_tmp);
+                                            // Does the user already got a user token ?
+                                            $user_token_linked = oa_social_login_get_user_token_by_userid($userid_tmp);
 
-	                                        // The user already has a different user_token
-	                                        if (!empty($user_token_linked))
-	                                        {
-	                                            // Linked identity_token to existing user_token
-	                                            $user_identites_linked = oa_social_login_relink_identity($user_data['identity_token'], $user_token_linked);
+                                            // The user already has a different user_token
+                                            if (!empty($user_token_linked))
+                                            {
+                                                // Linked identity_token to existing user_token
+                                                $user_identites_linked = oa_social_login_relink_identity($user_data['identity_token'], $user_token_linked);
 
-	                                            // If the relink is successfully, update the identities
-	                                            if (is_array ($user_identites_linked))
-	                                            {
-	                                                // Use new user_token
-	                                                $user_data['user_token'] = $user_token_linked;
+                                                // If the relink is successfully, update the identities
+                                                if (is_array($user_identites_linked))
+                                                {
+                                                    // Use new user_token
+                                                    $user_data['user_token'] = $user_token_linked;
 
-	                                                // Use new identites
-	                                                $user_data['user_identites'] = $user_identites_linked;
-	                                            }
-	                                        }
+                                                    // Use new identites
+                                                    $user_data['user_identites'] = $user_identites_linked;
+                                                }
+                                            }
 
-	                                        // Synchronize
-	                                        oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
-	                                    }
-	                                }
-	                            }
-	                        }
-	                        // User found for this user_token
-	                        else
-	                        {
-	                            oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
-	                        }
+                                            // Synchronize
+                                            oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
+                                        }
+                                    }
+                                }
+                            }
+                            // User found for this user_token
+                            else
+                            {
+                                oa_social_login_synchronize_identities($userid, $user_data['user_token'], $user_data['user_identites']);
+                            }
 
-	                        // New User
-	                        if (!is_numeric($userid))
-	                        {
-	                            // Username is mandatory
-	                            if (empty($user_data['user_login']))
-	                            {
-	                                $user_data['user_login'] = $user_identity_provider . 'User';
-	                            }
+                            // New User
+                            if (!is_numeric($userid))
+                            {
+                                // Username is mandatory
+                                if (empty($user_data['user_login']))
+                                {
+                                    $user_data['user_login'] = $user_identity_provider . 'User';
+                                }
 
-	                            // Username must be unique
-	                            if (username_exists($user_data['user_login']))
-	                            {
-	                                $i = 1;
-	                                $user_login_tmp = $user_data['user_login'];
-	                                do
-	                                {
-	                                    $user_login_tmp = $user_data['user_login'] . ($i++);
-	                                }
-	                                while (username_exists($user_login_tmp));
+                                // Username must be unique
+                                if (username_exists($user_data['user_login']))
+                                {
+                                    $i = 1;
+                                    $user_login_tmp = $user_data['user_login'];
+                                    do
+                                    {
+                                        $user_login_tmp = $user_data['user_login'] . ($i++);
+                                    } while (username_exists($user_login_tmp));
 
-	                                $user_data['user_login'] = $user_login_tmp;
-	                            }
+                                    $user_data['user_login'] = $user_login_tmp;
+                                }
 
-	                            // Is this a random email?
-	                            $user_data['user_email_is_real'] = true;
+                                // Is this a random email?
+                                $user_data['user_email_is_real'] = true;
 
-	                            // Email is required and must be unique
-	                            while (empty ($user_data['user_email']) || email_already_in_use($user_data['user_email']))
-	                            {
-	                            	// Generate random email
-	                            	$user_data['user_email'] = oa_social_login_create_rand_email();
+                                // Email is required and must be unique
+                                while (empty($user_data['user_email']) || email_already_in_use($user_data['user_email']))
+                                {
+                                    // Generate random email
+                                    $user_data['user_email'] = oa_social_login_create_rand_email();
 
-	                            	// This is a random email
-	                            	$user_data['user_email_is_real'] = false;
-	                            }
+                                    // This is a random email
+                                    $user_data['user_email_is_real'] = false;
+                                }
 
+                                // Determine the usergroup
+                                if ($user_data['user_email_is_real'] && ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser'])))
+                                {
+                                    // Awaiting Activation
+                                    $user_data['user_group'] = 5;
+                                }
+                                else
+                                {
+                                    // Registered
+                                    $user_data['user_group'] = 2;
+                                }
 
-	                            // Determine the usergroup
-	                            if ($user_data['user_email_is_real'] && ($mybb->settings['regtype'] == "verify" || $mybb->settings['regtype'] == "admin" || $mybb->settings['regtype'] == "both" || isset($mybb->cookies['coppauser'])))
-	                            {
-	                                // Awaiting Activation
-	                                $user_data['user_group'] = 5;
-	                            }
-	                            else
-	                            {
-	                                // Registered
-	                                $user_data['user_group'] = 2;
-	                            }
+                                // Set up user handler.
+                                require_once MYBB_ROOT . "inc/datahandlers/user.php";
 
+                                // Set the data for the new user.
+                                $mybb_user_data = array(
+                                    'username' => $user_data['user_login'],
+                                    'password' => $user_data['user_password_rand'],
+                                    'password2' => $user_data['user_password_rand'],
+                                    'email' => $user_data['user_email'],
+                                    'usergroup' => $user_data['user_group'],
+                                    'additionalgroups' => '',
+                                    'registration' => true,
+                                    'signature' => '',
+                                    'avatar' => '',
+                                    'avatartype' => '',
+                                    'profile_fields_editable' => true);
 
-	                            // Set up user handler.
-	                            require_once MYBB_ROOT . "inc/datahandlers/user.php";
+                                // Use avatar from Social Network profile?
+                                if (!empty($mybb->settings['oa_social_login_avatar']))
+                                {
+                                    // Picture found?
+                                    if (!empty($user_data['user_picture']))
+                                    {
+                                        $mybb_user_data['avatar'] = $user_data['user_picture'];
+                                        $mybb_user_data['avatartype'] = 'remote';
+                                    }
+                                    // Thumbnail found?
+                                    else
+                                    {
+                                        if (!empty($user_data['user_thumbnail']))
+                                        {
+                                            $mybb_user_data['avatar'] = $user_data['user_thumbnail'];
+                                            $mybb_user_data['avatartype'] = 'remote';
+                                        }
+                                    }
+                                }
 
-	                            // Set the data for the new user.
-	                            $mybb_user_data = array(
-	                                'username' => $user_data['user_login'],
-	                                'password' => $user_data['user_password_rand'],
-	                                'password2' => $user_data['user_password_rand'],
-	                                'email' => $user_data['user_email'],
-	                                'usergroup' => $user_data['user_group'],
-	                                'additionalgroups' => '',
-	                                'registration' => true,
-	                                'signature' => '',
-	                                'avatar' => '',
-	                                'avatartype' => '',
-	                                'profile_fields_editable' => true);
+                                // Read the profile fields.
+                                $profile_fields = $cache->read('profilefields');
 
-	                            // Use avatar from Social Network profile?
-	                            if (!empty($mybb->settings['oa_social_login_avatar']))
-	                            {
-	                                // Picture found?
-	                                if (!empty($user_data['user_picture']))
-	                                {
-	                                    $mybb_user_data['avatar'] = $user_data['user_picture'];
-	                                    $mybb_user_data['avatartype'] = 'remote';
-	                                }
-	                                // Thumbnail found?
-	                                else
-	                                {
-	                                    if (!empty($user_data['user_thumbnail']))
-	                                    {
-	                                        $mybb_user_data['avatar'] = $user_data['user_thumbnail'];
-	                                        $mybb_user_data['avatartype'] = 'remote';
-	                                    }
-	                                }
-	                            }
+                                // Reset so that they don't trigger errors.
+                                $cache->update('profilefields', array());
 
-	                            // Read the profile fields.
-	                            $profile_fields = $cache->read('profilefields');
+                                // Set the data of the user in the datahandler.
+                                $user_data_handler = new UserDataHandler('insert');
+                                $user_data_handler->set_data($mybb_user_data);
 
-	                            // Reset so that they don't trigger errors.
-	                            $cache->update('profilefields', array());
+                                // Validate the user data and check for errors
+                                if (!$user_data_handler->validate_user())
+                                {
+                                    // Revert back to old.
+                                    $cache->update('profilefields', $profile_fields);
 
-	                            // Set the data of the user in the datahandler.
-	                            $user_data_handler = new UserDataHandler('insert');
-	                            $user_data_handler->set_data($mybb_user_data);
+                                    // Read errors.
+                                    $redirect_message = implode(', ', $user_data_handler->get_friendly_errors());
 
-	                            // Validate the user data and check for errors
-	                            if (!$user_data_handler->validate_user())
-	                            {
-	                                // Revert back to old.
-	                                $cache->update('profilefields', $profile_fields);
+                                    // Log error
+                                    oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_user, $connection_token, implode(",", $errors)), __FILE__, __LINE__);
+                                }
+                                // Valid user data, create user
+                                else
+                                {
+                                    // Revert back to old.
+                                    $cache->update('profilefields', $profile_fields);
 
-	                                // Read errors.
-	                                $redirect_message = implode (', ',$user_data_handler->get_friendly_errors());
+                                    // Other actions
+                                    $plugins->run_hooks('member_do_register_start');
 
-	                                // Log error
-	                                oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_user, $connection_token, implode(",", $errors)), __FILE__, __LINE__);
-	                            }
-	                            // Valid user data, create user
-	                            else
-	                            {
-	                                // Revert back to old.
-	                                $cache->update('profilefields', $profile_fields);
+                                    // Add User
+                                    $mybb_new_user = $user_data_handler->insert_user();
 
-	                                // Other actions
-	                                $plugins->run_hooks('member_do_register_start');
+                                    // Synchronize
+                                    oa_social_login_synchronize_identities($mybb_new_user['uid'], $user_data['user_token'], $user_data['user_identites']);
 
-	                                // Add User
-	                                $mybb_new_user = $user_data_handler->insert_user();
+                                    // Register and redirect user
+                                    oa_social_login_register_user($mybb_new_user);
+                                }
+                            }
+                            // Existing user
+                            else
+                            {
+                                // Login
+                                oa_social_login_login_userid($userid);
+                            }
 
-	                                // Synchronize
-	                                oa_social_login_synchronize_identities($mybb_new_user['uid'], $user_data['user_token'], $user_data['user_identites']);
-
-	                                // Register and redirect user
-	                                oa_social_login_register_user($mybb_new_user);
-	                            }
-	                        }
-	                        // Existing user
-	                        else
-	                        {
-	                            // Login
-	                            oa_social_login_login_userid($userid);
-	                        }
-
-	                        // Unknown result
-	                        oa_social_login_log_error (sprintf ($lang->oa_social_login_error_unknown, $connection_token), __FILE__, __LINE__);
-	                    }
-	                }
-	                else
-	                {
-	                	// Invalid user data
-	                	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_data, $connection_token), __FILE__, __LINE__);
-	                }
-            	}
-            	// Invalid Subdomain
-            	elseif ($result->http_code == 404)
-            	{
-            		// Log error
-            		oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
-            	}
-            	else
-            	{
-            		// Unhandled HTTP code
-            		oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_http_code, $connection_token, $result->http_code), __FILE__, __LINE__);
-            	}
-
+                            // Unknown result
+                            oa_social_login_log_error(sprintf($lang->oa_social_login_error_unknown, $connection_token), __FILE__, __LINE__);
+                        }
+                    }
+                    else
+                    {
+                        // Invalid user data
+                        oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_data, $connection_token), __FILE__, __LINE__);
+                    }
+                }
+                // Invalid Subdomain
+                elseif ($result->http_code == 404)
+                {
+                    // Log error
+                    oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
+                }
+                else
+                {
+                    // Unhandled HTTP code
+                    oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_http_code, $connection_token, $result->http_code), __FILE__, __LINE__);
+                }
             }
             else
             {
-            	// Invalid API Result
-            	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_api_result, $connection_token, $result->http_code), __FILE__, __LINE__);
+                // Invalid API Result
+                oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_api_result, $connection_token, $result->http_code), __FILE__, __LINE__);
             }
         }
         else
         {
-        	// Invalid Subdomain
-        	oa_social_login_log_error (sprintf ($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
+            // Invalid Subdomain
+            oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_subdomain, $connection_token, $result->http_code), __FILE__, __LINE__);
         }
 
         // Error message.
-        if (empty ($redirect_message))
+        if (empty($redirect_message))
         {
-            $redirect_message =  $lang->oa_social_login_error;
+            $redirect_message = $lang->oa_social_login_error;
         }
 
         // Redirect to error page.
@@ -1676,7 +1680,7 @@ function oa_social_login_relink_identity($identity_token, $user_token)
             $json = json_encode($data);
 
             // Retrieve connection details
-            $data = oa_social_login_do_api_request ($api_connection_handler, $api_resource_url, $api_opts, $json);
+            $data = oa_social_login_do_api_request($api_connection_handler, $api_resource_url, $api_opts, $json);
 
             // Check API result.
             if (is_object($data) && property_exists($data, 'http_code') && $data->http_code == 200 && property_exists($data, 'http_data'))
@@ -1687,9 +1691,9 @@ function oa_social_login_relink_identity($identity_token, $user_token)
                 // Make sure that the data has beeen decoded properly
                 if (is_object($api_data))
                 {
-                    if (isset ($api_data->response->result->data->user->identities))
+                    if (isset($api_data->response->result->data->user->identities))
                     {
-                        $identities = array ();
+                        $identities = array();
 
                         // Build Result
                         foreach ($api_data->response->result->data->user->identities as $identity)
@@ -1698,6 +1702,7 @@ function oa_social_login_relink_identity($identity_token, $user_token)
                         }
 
                         // Success
+
                         return $identities;
                     }
                 }
@@ -1706,6 +1711,7 @@ function oa_social_login_relink_identity($identity_token, $user_token)
     }
 
     // Error
+
     return null;
 }
 
@@ -1742,6 +1748,7 @@ function oa_social_login_login_userid($userid)
     }
 
     // Error
+
     return false;
 }
 
@@ -1749,23 +1756,23 @@ function oa_social_login_login_userid($userid)
  * Logs an error
  * @return void
  */
-function oa_social_login_log_error ($message, $file, $line)
+function oa_social_login_log_error($message, $file, $line)
 {
-	global $mybb;
+    global $mybb;
 
-	// Build message
-	$message = "[ONEALL SOCIAL LOGIN] ".$message." [".$file."::".$line."]\n";
+    // Build message
+    $message = "[ONEALL SOCIAL LOGIN] " . $message . " [" . $file . "::" . $line . "]\n";
 
-	// Custom log location
-	if(trim($mybb->settings['errorloglocation']) != "")
-	{
-		@error_log($message, 3, $mybb->settings['errorloglocation']);
-	}
-	// PHP system logger
-	else
-	{
-		@error_log($message, 0);
-	}
+    // Custom log location
+    if (trim($mybb->settings['errorloglocation']) != "")
+    {
+        @error_log($message, 3, $mybb->settings['errorloglocation']);
+    }
+    // PHP system logger
+    else
+    {
+        @error_log($message, 0);
+    }
 }
 
 /**
@@ -1797,274 +1804,274 @@ function oa_social_login_register_user($user_info = array())
         oa_social_login_redirect(true, $lang->redirect_registered_coppa_activate);
     }
     else
-        if ($mybb->settings['regtype'] == "verify")
+    if ($mybb->settings['regtype'] == "verify")
+    {
+        $activationcode = random_str();
+        $now = TIME_NOW;
+        $activationarray = array(
+            "uid" => $user_info['uid'],
+            "dateline" => TIME_NOW,
+            "code" => $activationcode,
+            "type" => "r");
+        $db->insert_query("awaitingactivation", $activationarray);
+        $emailsubject = $lang->sprintf($lang->emailsubject_activateaccount, $mybb->settings['bbname']);
+        switch ($mybb->settings['username_method'])
         {
-            $activationcode = random_str();
-            $now = TIME_NOW;
-            $activationarray = array(
-                "uid" => $user_info['uid'],
-                "dateline" => TIME_NOW,
-                "code" => $activationcode,
-                "type" => "r");
-            $db->insert_query("awaitingactivation", $activationarray);
-            $emailsubject = $lang->sprintf($lang->emailsubject_activateaccount, $mybb->settings['bbname']);
-            switch ($mybb->settings['username_method'])
-            {
-                case 0:
-                    $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                    break;
-                case 1:
-                    $emailmessage = $lang->sprintf($lang->email_activateaccount1, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                    break;
-                case 2:
-                    $emailmessage = $lang->sprintf($lang->email_activateaccount2, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                    break;
-                default:
-                    $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                    break;
-            }
-            my_mail($user_info['email'], $emailsubject, $emailmessage);
-
-            $lang->redirect_registered_activation = $lang->sprintf($lang->redirect_registered_activation, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
-
-            $plugins->run_hooks("member_do_register_end");
-
-            oa_social_login_redirect(true, $lang->redirect_registered_activation);
+            case 0:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            case 1:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount1, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            case 2:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount2, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            default:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
         }
-        else
-            if ($mybb->settings['regtype'] == "randompass")
+        my_mail($user_info['email'], $emailsubject, $emailmessage);
+
+        $lang->redirect_registered_activation = $lang->sprintf($lang->redirect_registered_activation, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
+
+        $plugins->run_hooks("member_do_register_end");
+
+        oa_social_login_redirect(true, $lang->redirect_registered_activation);
+    }
+    else
+    if ($mybb->settings['regtype'] == "randompass")
+    {
+        $emailsubject = $lang->sprintf($lang->emailsubject_randompassword, $mybb->settings['bbname']);
+        switch ($mybb->settings['username_method'])
+        {
+            case 0:
+                $emailmessage = $lang->sprintf($lang->email_randompassword, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                break;
+            case 1:
+                $emailmessage = $lang->sprintf($lang->email_randompassword1, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                break;
+            case 2:
+                $emailmessage = $lang->sprintf($lang->email_randompassword2, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                break;
+            default:
+                $emailmessage = $lang->sprintf($lang->email_randompassword, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                break;
+        }
+        my_mail($user_info['email'], $emailsubject, $emailmessage);
+
+        $plugins->run_hooks("member_do_register_end");
+
+        oa_social_login_redirect(true, $lang->redirect_registered_passwordsent);
+    }
+    else
+    if ($mybb->settings['regtype'] == "admin")
+    {
+        $groups = $cache->read("usergroups");
+        $admingroups = array();
+        if (!empty($groups)) // Shouldn't be...
+        {
+            foreach ($groups as $group)
             {
-                $emailsubject = $lang->sprintf($lang->emailsubject_randompassword, $mybb->settings['bbname']);
-                switch ($mybb->settings['username_method'])
+                if ($group['cancp'] == 1)
                 {
-                    case 0:
-                        $emailmessage = $lang->sprintf($lang->email_randompassword, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
-                        break;
-                    case 1:
-                        $emailmessage = $lang->sprintf($lang->email_randompassword1, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
-                        break;
-                    case 2:
-                        $emailmessage = $lang->sprintf($lang->email_randompassword2, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                    $admingroups[] = (int) $group['gid'];
+                }
+            }
+        }
+
+        if (!empty($admingroups))
+        {
+            $sqlwhere = 'usergroup IN (' . implode(',', $admingroups) . ')';
+            foreach ($admingroups as $admingroup)
+            {
+                switch ($db->type)
+                {
+                    case 'pgsql':
+                    case 'sqlite':
+                        $sqlwhere .= " OR ','||additionalgroups||',' LIKE '%,{$admingroup},%'";
                         break;
                     default:
-                        $emailmessage = $lang->sprintf($lang->email_randompassword, $user['username'], $mybb->settings['bbname'], $user_info['username'], $user_info['password']);
+                        $sqlwhere .= " OR CONCAT(',',additionalgroups,',') LIKE '%,{$admingroup},%'";
                         break;
                 }
-                my_mail($user_info['email'], $emailsubject, $emailmessage);
-
-                $plugins->run_hooks("member_do_register_end");
-
-                oa_social_login_redirect(true, $lang->redirect_registered_passwordsent);
             }
-            else
-                if ($mybb->settings['regtype'] == "admin")
+            $q = $db->simple_select('users', 'uid,username,email,language', $sqlwhere);
+            while ($recipient = $db->fetch_array($q))
+            {
+                // First we check if the user's a super admin: if yes, we don't care about permissions
+                $is_super_admin = is_super_admin($recipient['uid']);
+                if (!$is_super_admin)
                 {
-                    $groups = $cache->read("usergroups");
-                    $admingroups = array();
-                    if (!empty($groups)) // Shouldn't be...
+                    // Include admin functions
+                    if (!file_exists(MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php"))
                     {
-                        foreach ($groups as $group)
-                        {
-                            if ($group['cancp'] == 1)
-                            {
-                                $admingroups[] = (int) $group['gid'];
-                            }
-                        }
+                        continue;
                     }
 
-                    if (!empty($admingroups))
+                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
+
+                    // Verify if we have permissions to access user-users
+                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/modules/user/module_meta.php";
+                    if (function_exists("user_admin_permissions"))
                     {
-                        $sqlwhere = 'usergroup IN (' . implode(',', $admingroups) . ')';
-                        foreach ($admingroups as $admingroup)
+                        // Get admin permissions
+                        $adminperms = get_admin_permissions($recipient['uid']);
+
+                        $permissions = user_admin_permissions();
+                        if (array_key_exists('users', $permissions['permissions']) && $adminperms['user']['users'] != 1)
                         {
-                            switch ($db->type)
-                            {
-                                case 'pgsql':
-                                case 'sqlite':
-                                    $sqlwhere .= " OR ','||additionalgroups||',' LIKE '%,{$admingroup},%'";
-                                    break;
-                                default:
-                                    $sqlwhere .= " OR CONCAT(',',additionalgroups,',') LIKE '%,{$admingroup},%'";
-                                    break;
-                            }
-                        }
-                        $q = $db->simple_select('users', 'uid,username,email,language', $sqlwhere);
-                        while ($recipient = $db->fetch_array($q))
-                        {
-                            // First we check if the user's a super admin: if yes, we don't care about permissions
-                            $is_super_admin = is_super_admin($recipient['uid']);
-                            if (!$is_super_admin)
-                            {
-                                // Include admin functions
-                                if (!file_exists(MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php"))
-                                {
-                                    continue;
-                                }
-
-                                require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
-
-                                // Verify if we have permissions to access user-users
-                                require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/modules/user/module_meta.php";
-                                if (function_exists("user_admin_permissions"))
-                                {
-                                    // Get admin permissions
-                                    $adminperms = get_admin_permissions($recipient['uid']);
-
-                                    $permissions = user_admin_permissions();
-                                    if (array_key_exists('users', $permissions['permissions']) && $adminperms['user']['users'] != 1)
-                                    {
-                                        continue; // No permissions
-                                    }
-                                }
-                            }
-
-                            // Load language
-                            if ($recipient['language'] != $lang->language && $lang->language_exists($recipient['language']))
-                            {
-                                $reset_lang = true;
-                                $lang->set_language($recipient['language']);
-                                $lang->load("member");
-                            }
-
-                            $subject = $lang->sprintf($lang->newregistration_subject, $mybb->settings['bbname']);
-                            $message = $lang->sprintf($lang->newregistration_message, $recipient['username'], $mybb->settings['bbname'], $user['username']);
-                            my_mail($recipient['email'], $subject, $message);
-                        }
-
-                        // Reset language
-                        if (isset($reset_lang))
-                        {
-                            $lang->set_language($mybb->settings['bblanguage']);
-                            $lang->load("member");
+                            continue; // No permissions
                         }
                     }
-
-                    $lang->redirect_registered_admin_activate = $lang->sprintf($lang->redirect_registered_admin_activate, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
-
-                    $plugins->run_hooks("member_do_register_end");
-
-                    oa_social_login_redirect(true, $lang->redirect_registered_admin_activate);
                 }
-                else
-                    if ($mybb->settings['regtype'] == "both")
+
+                // Load language
+                if ($recipient['language'] != $lang->language && $lang->language_exists($recipient['language']))
+                {
+                    $reset_lang = true;
+                    $lang->set_language($recipient['language']);
+                    $lang->load("member");
+                }
+
+                $subject = $lang->sprintf($lang->newregistration_subject, $mybb->settings['bbname']);
+                $message = $lang->sprintf($lang->newregistration_message, $recipient['username'], $mybb->settings['bbname'], $user['username']);
+                my_mail($recipient['email'], $subject, $message);
+            }
+
+            // Reset language
+            if (isset($reset_lang))
+            {
+                $lang->set_language($mybb->settings['bblanguage']);
+                $lang->load("member");
+            }
+        }
+
+        $lang->redirect_registered_admin_activate = $lang->sprintf($lang->redirect_registered_admin_activate, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
+
+        $plugins->run_hooks("member_do_register_end");
+
+        oa_social_login_redirect(true, $lang->redirect_registered_admin_activate);
+    }
+    else
+    if ($mybb->settings['regtype'] == "both")
+    {
+        $groups = $cache->read("usergroups");
+        $admingroups = array();
+        if (!empty($groups)) // Shouldn't be...
+        {
+            foreach ($groups as $group)
+            {
+                if ($group['cancp'] == 1)
+                {
+                    $admingroups[] = (int) $group['gid'];
+                }
+            }
+        }
+
+        if (!empty($admingroups))
+        {
+            $sqlwhere = 'usergroup IN (' . implode(',', $admingroups) . ')';
+            foreach ($admingroups as $admingroup)
+            {
+                switch ($db->type)
+                {
+                    case 'pgsql':
+                    case 'sqlite':
+                        $sqlwhere .= " OR ','||additionalgroups||',' LIKE '%,{$admingroup},%'";
+                        break;
+                    default:
+                        $sqlwhere .= " OR CONCAT(',',additionalgroups,',') LIKE '%,{$admingroup},%'";
+                        break;
+                }
+            }
+            $q = $db->simple_select('users', 'uid,username,email,language', $sqlwhere);
+            while ($recipient = $db->fetch_array($q))
+            {
+                // First we check if the user's a super admin: if yes, we don't care about permissions
+                $is_super_admin = is_super_admin($recipient['uid']);
+                if (!$is_super_admin)
+                {
+                    // Include admin functions
+                    if (!file_exists(MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php"))
                     {
-                        $groups = $cache->read("usergroups");
-                        $admingroups = array();
-                        if (!empty($groups)) // Shouldn't be...
-                        {
-                            foreach ($groups as $group)
-                            {
-                                if ($group['cancp'] == 1)
-                                {
-                                    $admingroups[] = (int) $group['gid'];
-                                }
-                            }
-                        }
-
-                        if (!empty($admingroups))
-                        {
-                            $sqlwhere = 'usergroup IN (' . implode(',', $admingroups) . ')';
-                            foreach ($admingroups as $admingroup)
-                            {
-                                switch ($db->type)
-                                {
-                                    case 'pgsql':
-                                    case 'sqlite':
-                                        $sqlwhere .= " OR ','||additionalgroups||',' LIKE '%,{$admingroup},%'";
-                                        break;
-                                    default:
-                                        $sqlwhere .= " OR CONCAT(',',additionalgroups,',') LIKE '%,{$admingroup},%'";
-                                        break;
-                                }
-                            }
-                            $q = $db->simple_select('users', 'uid,username,email,language', $sqlwhere);
-                            while ($recipient = $db->fetch_array($q))
-                            {
-                                // First we check if the user's a super admin: if yes, we don't care about permissions
-                                $is_super_admin = is_super_admin($recipient['uid']);
-                                if (!$is_super_admin)
-                                {
-                                    // Include admin functions
-                                    if (!file_exists(MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php"))
-                                    {
-                                        continue;
-                                    }
-
-                                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
-
-                                    // Verify if we have permissions to access user-users
-                                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/modules/user/module_meta.php";
-                                    if (function_exists("user_admin_permissions"))
-                                    {
-                                        // Get admin permissions
-                                        $adminperms = get_admin_permissions($recipient['uid']);
-
-                                        $permissions = user_admin_permissions();
-                                        if (array_key_exists('users', $permissions['permissions']) && $adminperms['user']['users'] != 1)
-                                        {
-                                            continue; // No permissions
-                                        }
-                                    }
-                                }
-
-                                // Load language
-                                if ($recipient['language'] != $lang->language && $lang->language_exists($recipient['language']))
-                                {
-                                    $reset_lang = true;
-                                    $lang->set_language($recipient['language']);
-                                    $lang->load("member");
-                                }
-
-                                $subject = $lang->sprintf($lang->newregistration_subject, $mybb->settings['bbname']);
-                                $message = $lang->sprintf($lang->newregistration_message, $recipient['username'], $mybb->settings['bbname'], $user['username']);
-                                my_mail($recipient['email'], $subject, $message);
-                            }
-
-                            // Reset language
-                            if (isset($reset_lang))
-                            {
-                                $lang->set_language($mybb->settings['bblanguage']);
-                                $lang->load("member");
-                            }
-                        }
-
-                        $activationcode = random_str();
-                        $activationarray = array(
-                            "uid" => $user_info['uid'],
-                            "dateline" => TIME_NOW,
-                            "code" => $activationcode,
-                            "type" => "b");
-                        $db->insert_query("awaitingactivation", $activationarray);
-                        $emailsubject = $lang->sprintf($lang->emailsubject_activateaccount, $mybb->settings['bbname']);
-                        switch ($mybb->settings['username_method'])
-                        {
-                            case 0:
-                                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                                break;
-                            case 1:
-                                $emailmessage = $lang->sprintf($lang->email_activateaccount1, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                                break;
-                            case 2:
-                                $emailmessage = $lang->sprintf($lang->email_activateaccount2, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                                break;
-                            default:
-                                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
-                                break;
-                        }
-                        my_mail($user_info['email'], $emailsubject, $emailmessage);
-
-                        $lang->redirect_registered_activation = $lang->sprintf($lang->redirect_registered_activation, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
-
-                        $plugins->run_hooks("member_do_register_end");
-
-                        oa_social_login_redirect(true, $lang->redirect_registered_activation);
+                        continue;
                     }
-                    else
+
+                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
+
+                    // Verify if we have permissions to access user-users
+                    require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/modules/user/module_meta.php";
+                    if (function_exists("user_admin_permissions"))
                     {
-                        $lang->redirect_registered = $lang->sprintf($lang->redirect_registered, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
+                        // Get admin permissions
+                        $adminperms = get_admin_permissions($recipient['uid']);
 
-                        $plugins->run_hooks("member_do_register_end");
-
-                        oa_social_login_redirect(true, $lang->redirect_registered);
+                        $permissions = user_admin_permissions();
+                        if (array_key_exists('users', $permissions['permissions']) && $adminperms['user']['users'] != 1)
+                        {
+                            continue; // No permissions
+                        }
                     }
+                }
+
+                // Load language
+                if ($recipient['language'] != $lang->language && $lang->language_exists($recipient['language']))
+                {
+                    $reset_lang = true;
+                    $lang->set_language($recipient['language']);
+                    $lang->load("member");
+                }
+
+                $subject = $lang->sprintf($lang->newregistration_subject, $mybb->settings['bbname']);
+                $message = $lang->sprintf($lang->newregistration_message, $recipient['username'], $mybb->settings['bbname'], $user['username']);
+                my_mail($recipient['email'], $subject, $message);
+            }
+
+            // Reset language
+            if (isset($reset_lang))
+            {
+                $lang->set_language($mybb->settings['bblanguage']);
+                $lang->load("member");
+            }
+        }
+
+        $activationcode = random_str();
+        $activationarray = array(
+            "uid" => $user_info['uid'],
+            "dateline" => TIME_NOW,
+            "code" => $activationcode,
+            "type" => "b");
+        $db->insert_query("awaitingactivation", $activationarray);
+        $emailsubject = $lang->sprintf($lang->emailsubject_activateaccount, $mybb->settings['bbname']);
+        switch ($mybb->settings['username_method'])
+        {
+            case 0:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            case 1:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount1, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            case 2:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount2, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+            default:
+                $emailmessage = $lang->sprintf($lang->email_activateaccount, $user_info['username'], $mybb->settings['bbname'], $mybb->settings['bburl'], $user_info['uid'], $activationcode);
+                break;
+        }
+        my_mail($user_info['email'], $emailsubject, $emailmessage);
+
+        $lang->redirect_registered_activation = $lang->sprintf($lang->redirect_registered_activation, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
+
+        $plugins->run_hooks("member_do_register_end");
+
+        oa_social_login_redirect(true, $lang->redirect_registered_activation);
+    }
+    else
+    {
+        $lang->redirect_registered = $lang->sprintf($lang->redirect_registered, $mybb->settings['bbname'], htmlspecialchars_uni($user_info['username']));
+
+        $plugins->run_hooks("member_do_register_end");
+
+        oa_social_login_redirect(true, $lang->redirect_registered);
+    }
 }
