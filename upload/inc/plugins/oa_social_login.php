@@ -896,7 +896,7 @@ function oa_social_login_extract_social_network_profile($data)
                     }
 
                     // myBB does not like spaces here
-                    $data['user_login'] = preg_replace('/[&\/ ,\'\"\\\]+/', ' ', trim($data['user_login']));
+                    $data['user_login'] = preg_replace('/[&\/ ,\'\"\\\]+/', '_', trim($data['user_login']));
 
                     // Website/Homepage.
                     $data['user_website'] = '';
