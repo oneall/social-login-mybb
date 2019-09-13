@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.1] - 2019-09-13
+### Fixed
+Registration type admin fixed
+
 ## [2.8.0] - 2019-05-29
 ### Added
 New provider added :

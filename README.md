@@ -1,5 +1,5 @@
 
-# Social Login 2.8.0 for myBB 1.6+
+# Social Login 2.8.1 for myBB 1.6+
 myBB Social Login allows your users to login and register with 40+ social networks. 
 It increases your user registration rate by simplifying the registration process for 
 new users and provides permission-based social data retrieved from the social network profiles.
