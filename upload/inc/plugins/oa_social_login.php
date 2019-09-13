@@ -1782,7 +1782,7 @@ function oa_social_login_log_error($message, $file, $line)
  */
 function oa_social_login_register_user($user_info = array())
 {
-    global $mybb, $lang, $db, $plugins;
+    global $mybb, $lang, $db, $plugins, $cache;
 
     require_once MYBB_ROOT . $mybb->config['admin_dir'] . "/inc/functions.php";
 
