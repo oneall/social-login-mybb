@@ -1553,7 +1553,7 @@ function oa_social_login_callback()
                                     $redirect_message = implode(', ', $user_data_handler->get_friendly_errors());
 
                                     // Log error
-                                    oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_user, $connection_token, implode(",", $errors)), __FILE__, __LINE__);
+                                    oa_social_login_log_error(sprintf($lang->oa_social_login_error_invalid_user, $connection_token, $redirect_message), __FILE__, __LINE__);
                                 }
                                 // Valid user data, create user
                                 else
