@@ -1393,6 +1393,7 @@ function oa_social_login_callback()
                                 if ($synchronize_identities)
                                 {
                                     oa_social_login_synchronize_identities($userid_current, $user_data['user_token'], $user_data['user_identites']);
+                                    oa_social_login_redirect(true);
                                 }
                             }
                         }
