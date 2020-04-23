@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.9.0] - 2020-04-23
+### Added
+New provider added :
+- Patreon
+
 ## [2.8.1] - 2019-09-13
 ### Fixed
 Registration type admin fixed

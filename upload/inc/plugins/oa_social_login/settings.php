@@ -315,6 +315,11 @@ function oa_social_login_get_settings()
             'title' => 'OpenID',
             'optionscode' => 'onoff'
         ],
+        'provider_patreon' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_patreon" title="Patreon">Patreon</span>',
+            'title' => 'Patreon',
+            'optionscode' => 'onoff'
+        ],
         'provider_paypal' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_paypal" title="PayPal">PayPal</span>',
             'title' => 'PayPal',

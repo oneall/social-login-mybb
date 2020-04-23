@@ -350,3 +350,7 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
 .oa_social_login_provider_google {
     background-position: -1704px -1px;
 }
+
+.oa_social_login_provider_patreon {
+    background-position: -1630px -1px;
+}
