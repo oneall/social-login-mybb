@@ -214,6 +214,11 @@ function oa_social_login_get_settings()
     <p>
        <legend>' . $lang->setting_oa_social_login_social_network_display . '</legend>
     </p>' ],
+        'provider_apple' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_apple" title="Apple">Apple</span>',
+            'title' => 'Apple',
+            'optionscode' => 'onoff'
+        ],
         'provider_amazon' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_amazon" title="Amazon">Amazon</span>',
             'title' => 'Amazon',
