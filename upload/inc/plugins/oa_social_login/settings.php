@@ -254,6 +254,11 @@ function oa_social_login_get_settings()
             'title' => 'Dribbble',
             'optionscode' => 'onoff'
         ],
+        'provider_epicgames' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_epicgames" title="Epic Games">Epic Games</span>',
+            'title' => 'Epic Games',
+            'optionscode' => 'onoff'
+        ],
         'provider_facebook' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_facebook" title="Facebook">Facebook</span>',
             'title' => 'Facebook',
@@ -355,6 +360,11 @@ function oa_social_login_get_settings()
             'title' => 'SoundCloud',
             'optionscode' => 'onoff'
         ],
+        'provider_spotify' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_spotify" title="Spotify">Spotify</span>',
+            'title' => 'Spotify',
+            'optionscode' => 'onoff'
+        ],
         'provider_stackexchange' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_stackexchange" title="StackExchange">StackExchange</span>',
             'title' => 'StackExchange',
@@ -363,6 +373,11 @@ function oa_social_login_get_settings()
         'provider_steam' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_steam" title="Steam">Steam</span>',
             'title' => 'Steam',
+            'optionscode' => 'onoff'
+        ],
+        'provider_strava' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_strava" title="Strava">Strava</span>',
+            'title' => 'Strava',
             'optionscode' => 'onoff'
         ],
         'provider_tumblr' => [
@@ -414,6 +429,11 @@ function oa_social_login_get_settings()
         'provider_yahoo' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_yahoo" title="Yahoo">Yahoo</span>',
             'title' => 'Yahoo',
+            'optionscode' => 'onoff'
+        ],
+        'provider_yandex' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_yandex" title="Yandex">Yandex</span>',
+            'title' => 'Yandex',
             'optionscode' => 'onoff'
         ],
         'provider_youtube' => [

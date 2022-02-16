@@ -22,7 +22,7 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
-define('OA_SOCIAL_LOGIN_USER_AGENT', 'SocialLogin/2.10.0 myBB/1.8 (+http://www.oneall.com/)');
+define('OA_SOCIAL_LOGIN_USER_AGENT', 'SocialLogin/2.11.0 myBB/1.8 (+http://www.oneall.com/)');
 
 /**
  * Sends an API request by using the given handler.

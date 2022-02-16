@@ -1,5 +1,5 @@
 
-# Social Login 2.10.0 for myBB 1.6+
+# Social Login 2.11.0 for myBB 1.6+
 myBB Social Login allows your users to login and register with 40+ social networks. 
 It increases your user registration rate by simplifying the registration process for 
 new users and provides permission-based social data retrieved from the social network profiles.
@@ -17,12 +17,13 @@ https://community.mybb.com/mods.php?action=view&pid=981
 * Amazon
 * Battle.net
 * Blogger
-* Discord
+* Discord 
 * Disqus
 * Draugiem
 * Dribbble
+* Epic Games
 * Facebook
-* Foursquare 
+* Foursquare
 * Github.com
 * Google
 * Instagram
@@ -37,12 +38,14 @@ https://community.mybb.com/mods.php?action=view&pid=981
 * Patreon
 * PayPal
 * Pinterest
-* PixelPin
+* PixelPin 
 * Reddit
 * Skyrock.com
-* SoundCloud
+* SoundCloud        
+* Spotify
 * StackExchange
 * Steam
+* Strava
 * Tumblr
 * Twitch.tv
 * Twitter
@@ -51,8 +54,9 @@ https://community.mybb.com/mods.php?action=view&pid=981
 * Weibo
 * Windows Live
 * WordPress.com
-* Xing
+* XING
 * Yahoo
+* Yandex
 * YouTube
 
 ## About Us
