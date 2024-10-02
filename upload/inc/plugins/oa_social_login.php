@@ -140,6 +140,9 @@ function oa_social_login_social_link()
         }
     }
 
+    // Save data for redirection
+    my_setcookie('oax', $mybb->user['uid'] . '_' . $mybb->user['loginkey'], null, true);
+
     eval("\$oa_social_link .= \"" . $contents . "\";");
 }
 
@@ -682,6 +685,40 @@ function oa_social_login_get_user_token_by_userid($uid)
     // Done
 
     return ((is_array($data) && !empty($data['user_token'])) ? $data['user_token'] : null);
+}
+
+/**
+ * Return User id from his token
+ * @param  string $user_token User Token
+ * @return string user id
+ */
+function is_valid_uid($token)
+{
+    global $db;
+
+    // Result
+    $userid = null;
+
+    // User data
+    $uData = explode('_', $token);
+
+    $uid = $uData[0] ?? '';
+    $loginKey = $uData[1] ?? '';
+
+    // Read user id for token
+    $query = $db->simple_select("users", "uid", "loginkey='" . $db->escape_string($loginKey) . "' AND uid='" . $db->escape_string($uid) . "'", array('limit' => 1, 'order_by' => 'uid', 'order_dir' => 'asc'));
+    $data = $db->fetch_array($query);
+
+    // User id for this user_token found
+    if (is_array($data) && !empty($data['uid']))
+    {
+        // Check if same uid for safety
+        return $data['uid'] == $uid;
+    }
+
+    // Done
+
+    return false;
 }
 
 /**
@@ -1366,11 +1403,22 @@ function oa_social_login_callback()
                         // Social Link
                         if ($action == 'social_link')
                         {
+                            // Get user if existing
+                            if (isset($mybb->cookies['oax']))
+                            {
+                                if (is_valid_uid($mybb->cookies['oax']))
+                                {
+                                    $uData = explode('_', $mybb->cookies['oax']);
+                                    $uid = $uData[0] ?? '';
+                                }
+                            }
+                            my_unsetcookie('oax');
+
                             // Make sure we have a user
-                            if (is_object($mybb) && isset($mybb->user) && !empty($mybb->user['uid']))
+                            if ($uid)
                             {
                                 // Logged in user
-                                $userid_current = $mybb->user['uid'];
+                                $userid_current = $uid;
 
                                 // Synchronize?
                                 $synchronize_identities = true;
