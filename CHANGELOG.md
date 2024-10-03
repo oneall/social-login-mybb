@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.12.0] - 2024-10-03
+### Added
+New provider added :
+- TikTok
+- X
+Fix for social link
+
 ## [2.11.0] - 2022-02-16
 ### Added
 New provider added :

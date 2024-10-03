@@ -32,7 +32,7 @@ $l['oa_social_login_setup_free_account'] = "Setup my free account";
 $l['oa_social_login_create_credential'] = "Create and view my API Credentials.";
 
 $l['setting_group_oa_social_login'] = "OneAll Social Login";
-$l['setting_group_oa_social_login_desc'] = "Allow your visitors to login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google and Yahoo amongst others. Social Login increases your user registration rate by simplifying the registration process and provides permission-based social data retrieved from the social network profiles. Social Login integrates with your existing registration system so you and your users don't have to start from scratch.";
+$l['setting_group_oa_social_login_desc'] = "Allow your visitors to login and register with social networks like Twitter / X, TikTok, Facebook, LinkedIn, Hyves, VKontakte, Google and Yahoo amongst others. Social Login increases your user registration rate by simplifying the registration process and provides permission-based social data retrieved from the social network profiles. Social Login integrates with your existing registration system so you and your users don't have to start from scratch.";
 
 
 $l['setting_oa_social_login_api_subdomain'] = "Api Subdomain";
@@ -116,7 +116,7 @@ $l['setting_oa_social_login_api_connection_display'] = "API Connection";
 $l['setting_oa_social_login_api_credential_display'] = "API Credentials - <a href=\"https://app.oneall.com/applications/\" class=\"external\" target=\"_blank\">Click here to create or view your API Credentials";
 
 $l['setting_oa_social_login_create_account_help'] = "Help, Updates &amp; Documentation";
-$l['setting_oa_social_login_create_account_follow_us'] = "<a href=\"http://www.twitter.com/oneall\" class=\"external\" target=\"_blank\">Follow us</a> on Twitter to stay informed about updates;";
+$l['setting_oa_social_login_create_account_follow_us'] = "<a href=\"http://www.twitter.com/oneall\" class=\"external\" target=\"_blank\">Follow us</a> on X to stay informed about updates;";
 $l['setting_oa_social_login_create_account_read'] = "<a href=\"http://docs.oneall.com/plugins/\" class=\"external\" target=\"_blank\">Read</a> the online documentation for more information about this plugin;";
 $l['setting_oa_social_login_create_account_discover'] = "<a href=\"http://docs.oneall.com/plugins/\" class=\"external\" target=\"_blank\">Discover</a> our turnkey plugins for Drupal, Joomla, WordPress;";
 $l['setting_oa_social_login_create_account_contact'] = "<a href=\"http://www.oneall.com/company/contact-us/\" class=\"external\" target=\"_blank\">Contact us</a> if you have feedback or need assistance!";

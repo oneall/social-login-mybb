@@ -380,6 +380,11 @@ function oa_social_login_get_settings()
             'title' => 'Strava',
             'optionscode' => 'onoff'
         ],
+        'provider_tiktok' => [
+            'description' => '<span class="oa_social_login_provider oa_social_login_provider_tiktok" title="TikTok">TikTok</span>',
+            'title' => 'TikTok',
+            'optionscode' => 'onoff'
+        ],
         'provider_tumblr' => [
             'description' => '<span class="oa_social_login_provider oa_social_login_provider_tumblr" title="Tumblr">Tumblr</span>',
             'title' => 'Tumblr',

@@ -227,7 +227,7 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
     background-position: -446px -1px;
 }
 
-.oa_social_login_provider_twitter {
+.oa_social_login_provider_old_twitter {
     background-position: -520px -1px;
 }
 
@@ -373,4 +373,12 @@ tr[id^="row_setting_oa_social_login_provider"]>td>.form_row {
 
 .oa_social_login_provider_spotify {
     background-position: -1889px -1px;
+}
+
+.oa_social_login_provider_tiktok {
+    background-position: -1926px -1px;
+}
+
+.oa_social_login_provider_twitter {
+    background-position: -1963px -1px;
 }
