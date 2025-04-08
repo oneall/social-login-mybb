@@ -223,25 +223,52 @@ function oa_social_login_install()
     if (!$db->table_exists('oa_social_login_user_token'))
     {
         $collation = $db->build_create_table_collation();
-        $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_user_token(
-            id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            uid INT(10) NOT NULL,
-            user_token CHAR(36) NOT NULL,
-            date_creation INT(10)
-            ) ENGINE=MyISAM{$collation};");
+        switch($db->type)
+        {
+            case "pgsql":
+                $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_user_token(
+                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    uid INT(10) NOT NULL,
+                    user_token CHAR(36) NOT NULL,
+                    date_creation INT(10)
+                    );");
+                break;
+            case "default":
+                $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_user_token(
+                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    uid INT(10) NOT NULL,
+                    user_token CHAR(36) NOT NULL,
+                    date_creation INT(10)
+                    ) ENGINE=MyISAM{$collation};");
+                break;
+        }
     }
 
     // Add identity Token table
     if (!$db->table_exists('oa_social_login_identity_token'))
     {
         $collation = $db->build_create_table_collation();
-        $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_identity_token(
-            id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            utid INT(10) NOT NULL,
-            identity_token CHAR(36) NOT NULL,
-            provider CHAR(36) NOT NULL,
-            date_creation INT(10)
-            ) ENGINE=MyISAM{$collation};");
+        switch($db->type)
+        {
+            case "pgsql":
+                $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_identity_token(
+                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    utid INT(10) NOT NULL,
+                    identity_token CHAR(36) NOT NULL,
+                    provider CHAR(36) NOT NULL,
+                    date_creation INT(10)
+                    );");
+                break;
+            case "default":
+                $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_identity_token(
+                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    utid INT(10) NOT NULL,
+                    identity_token CHAR(36) NOT NULL,
+                    provider CHAR(36) NOT NULL,
+                    date_creation INT(10)
+                    ) ENGINE=MyISAM{$collation};");
+                break;
+        }
     }
 
     // Add our templates
