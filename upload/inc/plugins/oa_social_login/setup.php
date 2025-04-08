@@ -227,10 +227,10 @@ function oa_social_login_install()
         {
             case "pgsql":
                 $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_user_token(
-                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    uid INT(10) NOT NULL,
+                    id SERIAL NOT NULL PRIMARY KEY,
+                    uid INT NOT NULL,
                     user_token CHAR(36) NOT NULL,
-                    date_creation INT(10)
+                    date_creation INT
                     );");
                 break;
             case "default":
@@ -252,11 +252,11 @@ function oa_social_login_install()
         {
             case "pgsql":
                 $db->write_query("CREATE TABLE " . TABLE_PREFIX . "oa_social_login_identity_token(
-                    id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                    utid INT(10) NOT NULL,
+                    id SERIAL NOT NULL PRIMARY KEY,
+                    utid INT NOT NULL,
                     identity_token CHAR(36) NOT NULL,
                     provider CHAR(36) NOT NULL,
-                    date_creation INT(10)
+                    date_creation INT
                     );");
                 break;
             case "default":
